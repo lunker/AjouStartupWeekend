@@ -2,6 +2,7 @@ package dk.app.AjouStartup;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,9 +11,10 @@ import android.view.ViewGroup;
 
 public class MainFragment extends Fragment {
 
+	
 	private RecyclerView recyclerView = null;
 	private MyAdapter adapter = null;
-	private LinearLayoutManager layoutManager = null;
+	private GridLayoutManager layoutManager = null;
 
 	private String[] strDataSet = { "1", "2", "3", "4", "5", "6", "7" };
 
@@ -44,7 +46,7 @@ public class MainFragment extends Fragment {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		
-		  layoutManager = new LinearLayoutManager(getActivity());
+		  layoutManager = new GridLayoutManager(getActivity(), 1);
 		  recyclerView.setLayoutManager(layoutManager);
 		 
 		  // specify an adapter (see also next example) 
@@ -52,6 +54,4 @@ public class MainFragment extends Fragment {
 		  recyclerView.setAdapter(adapter);
 		
 	}
-	
-	
 }

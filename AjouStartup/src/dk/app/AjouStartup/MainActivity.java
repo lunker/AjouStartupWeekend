@@ -1,27 +1,30 @@
 package dk.app.AjouStartup;
 
+import java.util.ArrayList;
 import java.util.List;
-
+import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
 public class MainActivity extends ActionBarActivity {
 
 	/*
 	 * drawer
 	 */
-
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private CharSequence mDrawerTitle;
@@ -29,22 +32,36 @@ public class MainActivity extends ActionBarActivity {
 
 	private MyDrawerAdapter drawerAdapter = null;
 	
+	private final String TAG = "ajou";
 	
-	private String[] drawerNameList = {"rental service", "communication"};
+	
+//	private String[] drawerNameList = {"profile", "rental service", "communication"};
 	private ListView mDrawerList;
-
+	private List<DrawerItem> drawerNameList = null;
 	
+	private FragmentManager manager ; 
+	private Fragment mainFragment = null;
+	private Fragment rentalFragment = null;
+	
+	
+	private int beforeSelected = -1;
+	
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
 	
 
-		drawerNameList = getResources().getStringArray(R.array.drawer_test);
+//		drawerNameList = getResources().getStringArray(R.array.drawer_test);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
-
+		
+		drawerNameList = new ArrayList<DrawerItem>();
+		drawerNameList.add(new DrawerItem("profile",true));
+		drawerNameList.add(new DrawerItem("Rental Service"));
+		drawerNameList.add(new DrawerItem("Communication"));
+		
 		
 		drawerAdapter = new MyDrawerAdapter(this, drawerNameList);
 		
@@ -54,7 +71,6 @@ public class MainActivity extends ActionBarActivity {
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
 		mTitle = mDrawerTitle = getTitle();
-
 		
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
 				R.drawable.ic_launcher,R.string.greeting) {
@@ -81,8 +97,18 @@ public class MainActivity extends ActionBarActivity {
 
 		// Set the drawer toggle as the DrawerListener
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
-//		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//		getActionBar().setDisplayHomeAsUpEnabled(tru”e);
 //	    getActionBar().setHomeButtonEnabled(true);
+		
+		mainFragment = new MainFragment();
+		rentalFragment = new RentalFragment();
+
+		manager = getFragmentManager();
+		FragmentTransaction ft = manager.beginTransaction();
+		ft.add(R.id.drawer_layout, mainFragment).add(R.id.drawer_layout, rentalFragment).detach(rentalFragment);
+		ft.commit();
+		
 
 	}
 	
@@ -130,8 +156,6 @@ public class MainActivity extends ActionBarActivity {
 			// TODO Auto-generated method stub
 			selectItem(position);
 			
-			
-			
 		}
 
 	}
@@ -140,20 +164,35 @@ public class MainActivity extends ActionBarActivity {
 	private void selectItem(int position) {
 		// Create a new fragment and specify the planet to show based on
 		// position
-
-		Fragment fragment = new MainFragment();
-//		Bundle args = new Bundle();
-//		args.putInt(.ARG_PLANET_NUMBER, position);
-//		fragment.setArguments(args);
-
-		// Insert the fragment by replacing any existing fragment
 		FragmentManager fragmentManager = getFragmentManager();
-		fragmentManager.beginTransaction()
-				.replace(R.id.content_frame, fragment).commit();
+		
+		
+		switch(beforeSelected){
+		
+		case -1 : fragmentManager.beginTransaction().detach(mainFragment).commit();break;
+		case 0 : fragmentManager.beginTransaction().detach(mainFragment).commit();break;
+		case 1:fragmentManager.beginTransaction().detach(rentalFragment).commit(); break;
+		case 2:break;
+		}
+		beforeSelected = position;
+		
+		
+		
+		switch(position){
+		case 0 : Log.i(TAG, "0");
+			fragmentManager.beginTransaction().attach( mainFragment).commit();
+			break;
+		case 1 : Log.i(TAG, "1");
+			
+			fragmentManager.beginTransaction().attach(rentalFragment).commit();
+			break; 
+		case 2 : Log.i(TAG, "2");break;
+		}
+		
 
 		// Highlight the selected item, update the title, and close the drawer
 		mDrawerList.setItemChecked(position, true);
-		setTitle(drawerNameList[position]);
+		setTitle(drawerNameList.get(position).getItemName());
 		mDrawerLayout.closeDrawer(mDrawerList);
 	}
 	/*
