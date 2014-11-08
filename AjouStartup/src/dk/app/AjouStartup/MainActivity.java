@@ -77,8 +77,8 @@ public class MainActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 	
-		Log.i("ajou",getpixels(240)+"");
-
+		Log.i("ajou",getpixels(65)+"");
+		
 		Log.i("ajou", "asdf");
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 //		mDrawerList = (ExpandableListView) findViewById(R.id.left_drawer);
@@ -96,7 +96,8 @@ public class MainActivity extends ActionBarActivity {
 		// Set the list's click listener
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 //		mDrawerList.setAdapter( drawerAdapter);
-		mDrawerList.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, categorys));
+//		mDrawerList.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, categorys));
+		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.test_test, categorys));
 		
 		mainCategory = new ArrayList<String>();
 		mainCategory.add("profile");

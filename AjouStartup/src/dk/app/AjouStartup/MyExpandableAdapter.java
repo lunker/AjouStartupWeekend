@@ -76,7 +76,7 @@ class MyExpandableAdapter extends BaseExpandableListAdapter {
 	                convertView = inflater.inflate(R.layout.custom_list_view, null);
 	                holder = new ViewHolder();
 
-	                holder.parentTitle = (TextView) convertView.findViewById(R.id.parentTitle);
+//	                holder.parentTitle = (TextView) convertView.findViewById(R.id.parentTitle);
 	                convertView.setTag(holder);
 	            } else {
 	                holder = (ViewHolder) convertView.getTag();

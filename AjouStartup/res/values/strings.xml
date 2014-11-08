@@ -15,4 +15,6 @@
     <string name="greeting">hi</string>
     <string name="ending">bye</string>
     <string name="title">rental</string>
+    
+    <string name="kakao_app_key">6f616d378b4eef9ae1b957e7eded83a3</string>
 </resources>
