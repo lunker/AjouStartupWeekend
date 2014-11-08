@@ -1,10 +1,9 @@
 package dk.app.AjouStartup;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-import dk.app.AjouStartup.profile.ProfileFragment;
-import dk.app.AjouStartup.rental.RentalFragment;
 import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -22,6 +21,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import dk.app.AjouStartup.profile.ProfileFragment;
+import dk.app.AjouStartup.rental.RentalFragment;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
 public class MainActivity extends ActionBarActivity {
@@ -39,6 +40,7 @@ public class MainActivity extends ActionBarActivity {
 	private final String TAG = "ajou";
 	
 	
+//	private ExpandableListView mDrawerList;
 	private ListView mDrawerList;
 	private List<DrawerItem> drawerNameList = null;
 	
@@ -49,6 +51,25 @@ public class MainActivity extends ActionBarActivity {
 	
 	private int beforeSelected = -1;
 	String[] categorys = {"profile", "rental", "communication"};
+//	String[] subCategorys = {"christmas", "wedding"};
+	private List<String> mainCategory = null;
+	private HashMap<String, List<String>> subCategory = new HashMap<String, List<String>>();
+	private List<String> rentalCategroy = new ArrayList<String>();
+//	private List<String> subCategory = null;
+	
+	
+	public float getpixels(int dp){
+
+        //Resources r = boardContext.getResources();
+        //float px = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpis, r.getDisplayMetrics());
+
+         final float scale = getResources().getDisplayMetrics().density;
+            int px = (int) (dp * scale + 0.5f);
+
+        return px;
+
+    }
+	
 	
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
 	@Override
@@ -56,9 +77,11 @@ public class MainActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 	
+		Log.i("ajou",getpixels(240)+"");
 
 		Log.i("ajou", "asdf");
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+//		mDrawerList = (ExpandableListView) findViewById(R.id.left_drawer);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 		
 		drawerNameList = new ArrayList<DrawerItem>();
@@ -73,9 +96,61 @@ public class MainActivity extends ActionBarActivity {
 		// Set the list's click listener
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 //		mDrawerList.setAdapter( drawerAdapter);
-		mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-	               android.R.layout.simple_list_item_1, categorys));
-		  
+		mDrawerList.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, categorys));
+		
+		mainCategory = new ArrayList<String>();
+		mainCategory.add("profile");
+		mainCategory.add("rental");
+		mainCategory.add("communication");
+		
+		rentalCategroy.add("wedding");
+		rentalCategroy.add("travle");
+		
+		subCategory.put("profile", new ArrayList<String>());
+		subCategory.put("rental", rentalCategroy);
+		subCategory.put("communication", new ArrayList<String>());
+		
+//		mDrawerList.setAdapter(new MyExpandableAdapter(this, mainCategory, subCategory));
+//		mDrawerList.setChoiceMode(ExpandableListView.CHOICE_MODE_SINGLE);
+		/*
+		mDrawerList.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+	        @Override
+	        public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+	        	Log.i("ajou", "on drawerClick");
+//				selectItem(position);
+	        	
+				FragmentManager fragmentManager = getFragmentManager();
+				
+				switch(beforeSelected){
+				
+				case -1 : fragmentManager.beginTransaction().detach(mainFragment).commit();break;
+				case 0 : fragmentManager.beginTransaction().detach(profileFragment).commit();break;
+				case 1: fragmentManager.beginTransaction().detach(rentalFragment).commit(); break;
+				case 2:break;
+				}
+				beforeSelected = groupPosition;
+				
+				
+				switch(groupPosition){
+				case 0 : Log.i("ajou", "select the :"+ groupPosition+"");
+					getFragmentManager().beginTransaction().attach( profileFragment).commit();
+					break;
+				case 1 : Log.i(TAG, "select the :"+ groupPosition+"");
+					getFragmentManager().beginTransaction().attach(rentalFragment).commit();
+					break; 
+				case 2 : Log.i(TAG, "select the :"+ groupPosition+"");break;
+				}
+
+				// Highlight the selected item, update the title, and close the drawer
+				mDrawerList.setItemChecked(groupPosition, true);
+				setTitle(drawerNameList.get(groupPosition).getItemName());
+				mDrawerLayout.closeDrawer(mDrawerList);
+	        
+				return true;
+	        }
+	    });
+	    */
+		
 		mTitle = mDrawerTitle = getTitle();
 		
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
