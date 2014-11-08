@@ -1,26 +1,13 @@
 package dk.app.AjouStartup;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.ContextWrapper;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.CompressFormat;
-import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -33,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import dk.app.AjouStartup.profile.ProfileFragment;
 import dk.app.AjouStartup.rental.RentalFragment;
@@ -71,6 +59,13 @@ public class MainActivity extends ActionBarActivity {
 //	private List<String> subCategory = null;
 	
 	
+	
+	private ArrayList<String> mGroupList = null;
+    private ArrayList<ArrayList<String>> mChildList = null;
+    private ArrayList<String> mChildListContent = null;
+    private ExpandableListView exListView=  null;
+    
+    
 	public float getpixels(int dp){
 
         //Resources r = boardContext.getResources();
@@ -95,7 +90,7 @@ public class MainActivity extends ActionBarActivity {
 		Log.i("ajou", "asdf");
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 //		mDrawerList = (ExpandableListView) findViewById(R.id.left_drawer);
-		mDrawerList = (ListView) findViewById(R.id.left_drawer);
+//		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 		
 		drawerNameList = new ArrayList<DrawerItem>();
 		drawerNameList.add(new DrawerItem("profile",true));
@@ -105,14 +100,11 @@ public class MainActivity extends ActionBarActivity {
 		drawerAdapter = new MyDrawerAdapter(this, drawerNameList);
 		
 		// Set the adapter for the list view
-		
 		// Set the list's click listener
-		
-		
-		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+//		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 //		mDrawerList.setAdapter( drawerAdapter);
 //		mDrawerList.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, categorys));
-		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.test_test, categorys));
+//		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.test_test, categorys));
 		
 		mainCategory = new ArrayList<String>();
 		mainCategory.add("profile");
@@ -126,46 +118,6 @@ public class MainActivity extends ActionBarActivity {
 		subCategory.put("rental", rentalCategroy);
 		subCategory.put("communication", new ArrayList<String>());
 		
-//		mDrawerList.setAdapter(new MyExpandableAdapter(this, mainCategory, subCategory));
-//		mDrawerList.setChoiceMode(ExpandableListView.CHOICE_MODE_SINGLE);
-		/*
-		mDrawerList.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-	        @Override
-	        public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-	        	Log.i("ajou", "on drawerClick");
-//				selectItem(position);
-	        	
-				FragmentManager fragmentManager = getFragmentManager();
-				
-				switch(beforeSelected){
-				
-				case -1 : fragmentManager.beginTransaction().detach(mainFragment).commit();break;
-				case 0 : fragmentManager.beginTransaction().detach(profileFragment).commit();break;
-				case 1: fragmentManager.beginTransaction().detach(rentalFragment).commit(); break;
-				case 2:break;
-				}
-				beforeSelected = groupPosition;
-				
-				
-				switch(groupPosition){
-				case 0 : Log.i("ajou", "select the :"+ groupPosition+"");
-					getFragmentManager().beginTransaction().attach( profileFragment).commit();
-					break;
-				case 1 : Log.i(TAG, "select the :"+ groupPosition+"");
-					getFragmentManager().beginTransaction().attach(rentalFragment).commit();
-					break; 
-				case 2 : Log.i(TAG, "select the :"+ groupPosition+"");break;
-				}
-
-				// Highlight the selected item, update the title, and close the drawer
-				mDrawerList.setItemChecked(groupPosition, true);
-				setTitle(drawerNameList.get(groupPosition).getItemName());
-				mDrawerLayout.closeDrawer(mDrawerList);
-	        
-				return true;
-	        }
-	    });
-	    */
 		
 		mTitle = mDrawerTitle = getTitle();
 		
@@ -211,6 +163,74 @@ public class MainActivity extends ActionBarActivity {
 			.detach(profileFragment);
 			ft.commit();
 		}
+		
+		
+		/**
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 */
+		
+		mGroupList = new ArrayList<String>();
+        mChildList = new ArrayList<ArrayList<String>>();
+        mChildListContent = new ArrayList<String>();
+ 
+        mGroupList.add("가위");
+        mGroupList.add("바위");
+        mGroupList.add("보");
+ 
+        mChildListContent.add("1");
+        mChildListContent.add("2");
+        mChildListContent.add("3");
+ 
+        mChildList.add(mChildListContent);
+        mChildList.add(mChildListContent);
+        mChildList.add(mChildListContent);
+ 
+        exListView = (ExpandableListView) findViewById(R.id.elv_list);
+        exListView.setAdapter(new BaseExpandableAdapter(this, mGroupList, mChildList));
+         
+        // 그룹 클릭 했을 경우 이벤트
+        exListView.setOnGroupClickListener(new OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v,
+                    int groupPosition, long id) {
+                Toast.makeText(getApplicationContext(), "g click = " + groupPosition, 
+                        Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+         
+        // 차일드 클릭 했을 경우 이벤트
+        exListView.setOnChildClickListener(new OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v,
+                    int groupPosition, int childPosition, long id) {
+                Toast.makeText(getApplicationContext(), "c click = " + childPosition, 
+                        Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+         
+        // 그룹이 닫힐 경우 이벤트
+        exListView.setOnGroupCollapseListener(new OnGroupCollapseListener() {
+            @Override
+            public void onGroupCollapse(int groupPosition) {
+                Toast.makeText(getApplicationContext(), "g Collapse = " + groupPosition, 
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+         
+        // 그룹이 열릴 경우 이벤트
+        exListView.setOnGroupExpandListener(new OnGroupExpandListener() {
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                Toast.makeText(getApplicationContext(), "g Expand = " + groupPosition, 
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
 
 	}
 	

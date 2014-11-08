@@ -510,6 +510,7 @@ int id drawer_layout 0x7f0c0052
 int id drawer_list_item_name 0x7f0c005e
 int id dropdown 0x7f0c002b
 int id edit_query 0x7f0c0046
+int id elv_list 0x7f0c0054
 int id end 0x7f0c002d
 int id expand_activities_button 0x7f0c0035
 int id expanded_menu 0x7f0c003b
@@ -525,7 +526,6 @@ int id ifRoom 0x7f0c0027
 int id image 0x7f0c0036
 int id itemLayout 0x7f0c005c
 int id kakao_login_activity_progress_bar 0x7f0c005f
-int id left_drawer 0x7f0c0054
 int id listMode 0x7f0c001d
 int id list_item 0x7f0c0038
 int id main_activity_recycle_view 0x7f0c0066
