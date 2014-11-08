@@ -14,4 +14,5 @@
 
     <string name="greeting">hi</string>
     <string name="ending">bye</string>
+    <string name="title">rental</string>
 </resources>

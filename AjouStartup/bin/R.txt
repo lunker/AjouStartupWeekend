@@ -383,7 +383,7 @@ int id default_activity_button 0x7f0a0026
 int id dialog 0x7f0a0019
 int id disableHome 0x7f0a000d
 int id drawer_layout 0x7f0a0041
-int id drawer_list_item_one 0x7f0a0045
+int id drawer_list_item_name 0x7f0a0044
 int id dropdown 0x7f0a001a
 int id edit_query 0x7f0a0035
 int id end 0x7f0a001c
@@ -397,10 +397,10 @@ int id image 0x7f0a0025
 int id left_drawer 0x7f0a0043
 int id listMode 0x7f0a000a
 int id list_item 0x7f0a0027
-int id main_activity_recycle_view 0x7f0a0044
-int id main_card_view 0x7f0a0046
-int id main_card_view_image 0x7f0a0047
-int id main_card_view_text 0x7f0a0048
+int id main_activity_recycle_view 0x7f0a0048
+int id main_card_view 0x7f0a0045
+int id main_card_view_image 0x7f0a0046
+int id main_card_view_text 0x7f0a0047
 int id middle 0x7f0a001d
 int id never 0x7f0a0017
 int id none 0x7f0a000f
@@ -458,7 +458,8 @@ int layout abc_simple_dropdown_hint 0x7f030016
 int layout activity_main 0x7f030017
 int layout drawer_list_item 0x7f030018
 int layout layout_main_activity_card_view 0x7f030019
-int layout support_simple_spinner_dropdown_item 0x7f03001a
+int layout layout_main_fragment 0x7f03001a
+int layout support_simple_spinner_dropdown_item 0x7f03001b
 int menu main 0x7f0d0000
 int string abc_action_bar_home_description 0x7f0b0001
 int string abc_action_bar_home_description_format 0x7f0b0004
@@ -480,6 +481,7 @@ int string app_name 0x7f0b000f
 int string ending 0x7f0b0013
 int string greeting 0x7f0b0012
 int string hello_world 0x7f0b0010
+int string title 0x7f0b0014
 int style AppBaseTheme 0x7f0700ee
 int style AppTheme 0x7f0700ef
 int style Base_TextAppearance_AppCompat 0x7f07009b
