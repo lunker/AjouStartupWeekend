@@ -19,7 +19,7 @@
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_marginLeft="60dp"
-                android:src="@drawable/test2" />
+                 />
 
             <LinearLayout
                 android:id="@+id/product_info_layout_date"
@@ -52,6 +52,9 @@
                 android:id="@+id/product_info_layout_color"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/product_info_layout_date"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="40dp"
                 android:orientation="horizontal" >
 
                 <TextView
@@ -72,6 +75,9 @@
                 android:id="@+id/product_info_layout_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/product_info_layout_color"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="40dp"
                 android:orientation="horizontal" >
 
                 <TextView
@@ -91,9 +97,9 @@
                 android:id="@+id/product_info_layout_ps"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/product_info_layout_date"
+                android:layout_below="@id/product_info_layout_price"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="40dp"
                 android:orientation="vertical" >
 
                 <TextView
@@ -109,10 +115,10 @@
                     android:layout_height="wrap_content" />
 
                 <Button
-                    android:id="@+id/product_info_btn_purchase"
+                    android:id="@+id/product_info_btn_rental"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="구매" />
+                    android:text="렌탈하기" />
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>

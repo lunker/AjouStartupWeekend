@@ -539,7 +539,7 @@ int id never 0x7f0c0028
 int id none 0x7f0c000a
 int id normal 0x7f0c000b
 int id product_image 0x7f0c0068
-int id product_info_btn_purchase 0x7f0c0076
+int id product_info_btn_rental 0x7f0c0076
 int id product_info_color 0x7f0c006f
 int id product_info_color_title 0x7f0c006e
 int id product_info_layout_color 0x7f0c006d

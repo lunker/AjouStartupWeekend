@@ -17,6 +17,10 @@ public class CommunicationFragment extends Fragment{
 		// TODO Auto-generated method stub
 		
 		return super.onCreateView(inflater, container, savedInstanceState);
+		
+		
+		
+		
 	}
 	
 	
