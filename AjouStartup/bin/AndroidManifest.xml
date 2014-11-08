@@ -27,6 +27,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Dialog" >
         </activity>
+        <activity android:name=".SignupActivity"></activity>
     </application>
 
 </manifest>
