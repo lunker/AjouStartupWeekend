@@ -4,8 +4,12 @@ import android.app.Application;
 
 public class GlobalVariable extends Application {
 	
-	private final String SERVERIP = "1.234.75.40";
-	private final int HTTPPORT = 998;
+	private final String SERVERIP = "172.30.90.235";
+	private final int HTTPPORT = 888;
+	
+	
+	
+	
 	public String getSERVERIP() {
 		return SERVERIP;
 	}

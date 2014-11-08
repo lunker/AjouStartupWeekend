@@ -1,4 +1,4 @@
-package superapp.korea.imagestealer;
+package dk.app.AjouStartup;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -174,7 +174,7 @@ public class SignupActivity extends Activity {
 										
 									}
 								});
-								getProfileImage.start();
+//								getProfileImage.start();
 							}
 							
 							
@@ -211,7 +211,7 @@ public class SignupActivity extends Activity {
 									}
 								}
 							});
-							updateThread.start();
+//							updateThread.start();
 							
 							
 						}//end method
@@ -286,7 +286,7 @@ public class SignupActivity extends Activity {
 							
 						}
 					});
-					signupThread.start();
+//					signupThread.start();
 					
 					Thread getProfileImage = new Thread(new Runnable() {
 						
@@ -316,63 +316,14 @@ public class SignupActivity extends Activity {
 							
 						}
 					});
-					getProfileImage.start();
+//					getProfileImage.start();
 					
 					
 					prefs.edit().putBoolean("signup", true).commit();
 					
 				}
-//				Log.i("clientApp", userProfile.get)
-				Thread getRanking = new Thread(new Runnable() {
-					
-					@Override
-					public void run() {
-						// TODO Auto-generated method stub
-						HttpClient client = new DefaultHttpClient();
-						HttpGet get = new HttpGet("http://" + global.getSERVERIP() +":" + global.getHTTPPORT());
-						get.addHeader("myRequest", "getranking");
-						
-						try {
-							Log.i("clientApp", "request the raning list");
-							HttpResponse response = client.execute(get);
-//							DataInputStream dis = new DataInputStream(response.getEntity().getContent());
-							String responseBody = EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
-							
-							Log.i("clientApp", "get the raning list");
-							Log.i("clientApp", responseBody);
-							
-							String[] responses = responseBody.split(",");
-//							ArrayList<String> adapterList = new ArrayList<String>();
-							
-							for(String item : responses){
-								adapterList.add(item);
-							}
-							
-							File file = new File(getFilesDir()+"ranking.txt");
-							ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
-							oos.writeObject(adapterList);
-							oos.close();
-							oos = null;
-							
-						} catch (ClientProtocolException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						
-						
-						
-					}
-				});
-				getRanking.start();
-				
+			
 				redirectMainActivity();
-				
-				/*
-				 * hmm?
-				 */
 				
 			}
 
