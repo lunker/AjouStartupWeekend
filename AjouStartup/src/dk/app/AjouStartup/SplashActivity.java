@@ -14,6 +14,7 @@ public class SplashActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.layout_splash_activity);
 		
 		new Handler().postDelayed(new Runnable(){
             @Override
