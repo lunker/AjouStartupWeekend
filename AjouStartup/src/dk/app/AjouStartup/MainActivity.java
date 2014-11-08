@@ -154,6 +154,7 @@ public class MainActivity extends ActionBarActivity {
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
 			// TODO Auto-generated method stub
+			Log.i("dk", "onitemclick");
 			selectItem(position);
 			
 		}
@@ -179,14 +180,14 @@ public class MainActivity extends ActionBarActivity {
 		
 		
 		switch(position){
-		case 0 : Log.i(TAG, "0");
+		case 0 : Log.i("ajou", position+"");
 			fragmentManager.beginTransaction().attach( mainFragment).commit();
 			break;
-		case 1 : Log.i(TAG, "1");
+		case 1 : Log.i(TAG, position+"");
 			
 			fragmentManager.beginTransaction().attach(rentalFragment).commit();
 			break; 
-		case 2 : Log.i(TAG, "2");break;
+		case 2 : Log.i(TAG, position+"");break;
 		}
 		
 
