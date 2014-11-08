@@ -1,10 +1,23 @@
 package dk.app.AjouStartup;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import android.app.Fragment;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +32,8 @@ public class MainFragment extends Fragment {
 	private String[] strDataSet = { "1", "2", "3", "4", "5", "6", "7" };
 
 	private View view = null;
-	
+	private final String MAINPRODUCTNAME = "mtest";
+	private final String MAINPRODUCTEXTEN = ".PNG";
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,13 +47,15 @@ public class MainFragment extends Fragment {
 			  // in content do not change the layout size of the RecyclerView
 			  recyclerView = (RecyclerView)view.findViewById(R.id.main_activity_recycle_view);
 			  recyclerView.setHasFixedSize(true);
-			
+			  
+//			  MainThread[] th = new MainThread[5];
+//			  for(int i = 0 ; i < 5 ; i++)
+//			  {
+//				  
+//				  th[i] = new MainThread(i);
+//				  th[i].start();
+//			  }
 		}
-		/*
-		else{
-			((ViewGroup)view.getParent()).removeView(view);
-		}*/
-		
 		
 		return view;
 	}
@@ -57,4 +73,6 @@ public class MainFragment extends Fragment {
 		  recyclerView.setAdapter(adapter);
 		
 	}
+	
+	
 }

@@ -15,9 +15,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        
-        android:theme="@style/CustomActionBarTheme">
-        
+        android:theme="@style/CustomActionBarTheme" >
         <activity
             android:name=".SplashActivity"
             android:label="@string/app_name" >
@@ -34,8 +32,15 @@
         </activity>
         <activity android:name=".SignupActivity" >
         </activity>
-        <activity android:name=".MainActivity"></activity>
-        
+        <activity android:name=".MainActivity" >
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:configChanges="orientation|screenSize" >
+        </activity>
+        <activity
+            android:name="com.kakao.LoginActivity"
+            android:configChanges="orientation|screenSize" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

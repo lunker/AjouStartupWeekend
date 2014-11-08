@@ -59,7 +59,17 @@ public class MainServer extends Verticle {
 								}
 							}
 						});//end eventbus
-					}// end if 
+					}// end if
+					
+					else if(req.headers().get("state").equals("main")){
+						
+						
+						req.response().wri
+						
+					}
+					
+					
+					
 				}// end get method
 				
 				req.endHandler(new Handler<Void>() {

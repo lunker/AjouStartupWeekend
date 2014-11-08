@@ -1,5 +1,6 @@
 package dk.app.AjouStartup;
 
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -64,7 +65,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.mTextView.setText(strDataSet[position]);
-        holder.mImageView.setImageResource(R.drawable.test1);
+        holder.mImageView.setImageBitmap(BitmapFactory.decodeFile("/data/data/dk.app.AjouStartup/cache/"+"mtest"+ position+".jpg"));
 
     }
 

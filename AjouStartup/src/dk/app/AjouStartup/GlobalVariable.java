@@ -4,18 +4,26 @@ import android.app.Application;
 
 public class GlobalVariable extends Application {
 	
-	private final String SERVERIP = "172.30.90.235";
-	private final int HTTPPORT = 888;
+	private final String SERVERIP = "192.168.43.137";
+	private final int HTTPPORT = 8787;
 	
+	private final String SERVER = "http://" + SERVERIP + ":" + HTTPPORT ;
+//	private final String SERVER = "http://172.30.90.235;8787";
 	
-	
-	
+	private final String MAINPRODUCTNAME = "mtest";
+	private final String MAINPRODUCTEXTEN = ".PNG";
 	public String getSERVERIP() {
 		return SERVERIP;
 	}
 	public int getHTTPPORT() {
 		return HTTPPORT;
 	}
+	public String getSERVER() {
+		return SERVER;
+	}
+	
+	
+	
 	
 	
 }

@@ -3,11 +3,8 @@ package dk.app.AjouStartup;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -19,8 +16,6 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -36,7 +31,6 @@ import com.kakao.APIErrorResult;
 import com.kakao.KakaoTalkHttpResponseHandler;
 import com.kakao.KakaoTalkProfile;
 import com.kakao.KakaoTalkService;
-import com.kakao.LoginActivity;
 import com.kakao.MeResponseCallback;
 import com.kakao.UserManagement;
 import com.kakao.UserProfile;
@@ -68,6 +62,7 @@ public class SignupActivity extends Activity {
 //		edit.putBoolean("signup", true);
 //		edit.commit();
 		redirectLoginActivity();
+		
 	}
 
 	protected void redirectMainActivity() {
@@ -174,7 +169,7 @@ public class SignupActivity extends Activity {
 										
 									}
 								});
-//								getProfileImage.start();
+								getProfileImage.start();
 							}
 							
 							
@@ -211,7 +206,7 @@ public class SignupActivity extends Activity {
 									}
 								}
 							});
-//							updateThread.start();
+							updateThread.start();
 							
 							
 						}//end method
@@ -264,9 +259,9 @@ public class SignupActivity extends Activity {
 							meb.addTextBody("nickname",userProfile.getNickname(),ContentType.MULTIPART_FORM_DATA);
 							meb.addTextBody("profile",userProfile.getThumbnailImagePath(), ContentType.MULTIPART_FORM_DATA);
 							
-							SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-							meb.addTextBody("registerdate", sdfNow.format(new Date(System.currentTimeMillis())));
-							
+//							SimpleDateFormat sdfNow = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+//							meb.addTextBody("registerdate", sdfNow.format(new Date(System.currentTimeMillis())));
+//							
 							HttpEntity entity = meb.build();
 							post.setHeader("state", "register");
 							post.setEntity(entity);
@@ -286,7 +281,7 @@ public class SignupActivity extends Activity {
 							
 						}
 					});
-//					signupThread.start();
+					signupThread.start();
 					
 					Thread getProfileImage = new Thread(new Runnable() {
 						
@@ -312,13 +307,9 @@ public class SignupActivity extends Activity {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
-							
-							
 						}
 					});
-//					getProfileImage.start();
-					
-					
+					getProfileImage.start();
 					prefs.edit().putBoolean("signup", true).commit();
 					
 				}

@@ -2,8 +2,10 @@ package dk.app.AjouStartup;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.kakao.Session;
@@ -43,6 +45,7 @@ public class LoginActivity extends Activity{
         public void onSessionOpened() {
             // 프로그레스바를 보이고 있었다면 중지하고 세션 오픈후 보일 페이지로 이동
             LoginActivity.this.onSessionOpened();
+            Log.i("clientApp","in onsessionopend()");
         }
 
         @Override
@@ -58,4 +61,16 @@ public class LoginActivity extends Activity{
         startActivity(intent);
         finish();
     }
+    
+
+    protected void setBackground(Drawable drawable) {
+        final View root = findViewById(android.R.id.content);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            root.setBackground(drawable);
+        } else {
+            root.setBackgroundDrawable(drawable);
+        }
+    }
+    
+    
 }
