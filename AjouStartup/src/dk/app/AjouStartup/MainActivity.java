@@ -1,6 +1,7 @@
 package dk.app.AjouStartup;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,8 +20,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnChildClickListener;
+import android.widget.ExpandableListView.OnGroupClickListener;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import dk.app.AjouStartup.profile.ProfileFragment;
 import dk.app.AjouStartup.rental.RentalFragment;
@@ -33,8 +36,7 @@ public class MainActivity extends ActionBarActivity {
 	 */
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
-	private CharSequence mDrawerTitle;
-	private CharSequence mTitle;
+
 
 	private MyDrawerAdapter drawerAdapter = null;
 	
@@ -52,7 +54,7 @@ public class MainActivity extends ActionBarActivity {
 	
 	private int beforeSelected = -1;
 	String[] categorys = {"profile", "rental", "communication"};
-//	String[] subCategorys = {"christmas", "wedding"};
+	String[] subCategorys = {"christmas", "wedding"};
 	private List<String> mainCategory = null;
 	private HashMap<String, List<String>> subCategory = new HashMap<String, List<String>>();
 	private List<String> rentalCategroy = new ArrayList<String>();
@@ -60,12 +62,42 @@ public class MainActivity extends ActionBarActivity {
 	
 	
 	
-	private ArrayList<String> mGroupList = null;
-    private ArrayList<ArrayList<String>> mChildList = null;
-    private ArrayList<String> mChildListContent = null;
+	 private CharSequence mDrawerTitle;
+	    private CharSequence mTitle;
+	    private String[] mPlanetTitles;
+	    private int selectedPosition;
     private ExpandableListView exListView=  null;
     
+    private List<String> listParent;
+    HashMap<String, List<String>> listDataChild;
+    CustomExpandAdapter customAdapter;
+    private LinearLayout navDrawerView;
     
+    /*
+     * 
+     * group-
+     * -1 ; main
+     * 0  ; profile
+     * 1 ; rental
+     * 2 ; communication
+     */
+    
+    /*
+     * child  -
+     * 
+     * 0 : christmas
+     * 1 : wedding
+     * 
+     */
+    
+    /**
+     * isshowing
+     * 0 ;group
+     * 1 ; child
+     */
+    int isShowing = -1;
+    int groupClicked = -2;
+    int childClicked = -2;
 	public float getpixels(int dp){
 
         //Resources r = boardContext.getResources();
@@ -88,9 +120,10 @@ public class MainActivity extends ActionBarActivity {
 //		th.start();
 		
 		Log.i("ajou", "asdf");
+		navDrawerView = (LinearLayout) findViewById(R.id.navDrawerView);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 //		mDrawerList = (ExpandableListView) findViewById(R.id.left_drawer);
-		mDrawerList = (ListView) findViewById(R.id.left_drawer);
+//		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 		
 		drawerNameList = new ArrayList<DrawerItem>();
 		drawerNameList.add(new DrawerItem("profile",true));
@@ -104,20 +137,7 @@ public class MainActivity extends ActionBarActivity {
 //		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 //		mDrawerList.setAdapter( drawerAdapter);
 //		mDrawerList.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, categorys));
-		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.test_test, categorys));
-		
-		mainCategory = new ArrayList<String>();
-		mainCategory.add("profile");
-		mainCategory.add("rental");
-		mainCategory.add("communication");
-		
-		rentalCategroy.add("wedding");
-		rentalCategroy.add("travle");
-		
-		subCategory.put("profile", new ArrayList<String>());
-		subCategory.put("rental", rentalCategroy);
-		subCategory.put("communication", new ArrayList<String>());
-		
+//		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.test_test, categorys));
 		
 		mTitle = mDrawerTitle = getTitle();
 		
@@ -164,14 +184,182 @@ public class MainActivity extends ActionBarActivity {
 			ft.commit();
 		}
 		
+		/**
+		 * 
+		 * 
+		 */
+		
+		exListView = (ExpandableListView) findViewById(R.id.nav_left_drawer);
+		listParent = new ArrayList<String>();
+	    listDataChild = new HashMap<String, List<String>>();
+	    
+	    listParent.add("profile");
+        listParent.add("rental");
+        listParent.add("communication");
 
+        listDataChild.put("profile", new ArrayList<String>());
+        listDataChild.put("rental", Arrays.asList(subCategorys));
+
+        listDataChild.put("communication", new ArrayList<String>());
+
+        customAdapter = new CustomExpandAdapter(this, listParent, listDataChild);
+        // setting list adapter
+        
+        exListView.setAdapter(customAdapter);
+        exListView.setChoiceMode(ExpandableListView.CHOICE_MODE_SINGLE);
+//        mDrawerList.setAdapter(customAdapter);
+//        mDrawerList.setChoiceMode(ExpandableListView.CHOICE_MODE_SINGLE);
+        
+        
 	}
 	
+	@Override
+    protected void onResume() {
+        super.onResume();
+        exListView.setOnGroupClickListener(new OnGroupClickListener() {
+
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+            	
+                int index = parent.getFlatListPosition(ExpandableListView.getPackedPositionForGroup(groupPosition));
+                parent.setItemChecked(index, true);
+
+                Log.i("ajou", "onGroupclick : " +  groupPosition);
+                
+                String parentTitle = ((String) customAdapter.getGroup(groupPosition));
+
+                /*
+                if (!parentTitle.equals("rental")){
+                	
+                	switch(isShowing){
+                	
+                	//group
+                		case 0:
+                			
+                			break;
+                			
+                		case 1:
+                			
+                			break;
+                	}
+                	
+                	switch(groupClicked){
+                	case -1:
+                		
+                		break;
+                	case 0:
+                		getFragmentManager().beginTransaction().detach(fragment)
+                		break;
+                	case 1:break;
+                	case 2: break;
+                	}
+                	
+                	//attach fragment
+                	switch(groupPosition){
+                	case -1: getFragmentManager().beginTransaction().attach(mainFragment).commit()break;
+                	case 0: getFragmentManager().beginTransaction().attach(profileFragment).commit()break;
+                	case 2: break;
+                	
+                	}
+                	
+                	isShowing = 0;
+                	groupClicked = groupPosition;
+                	
+                	
+                    mDrawerLayout.closeDrawer(navDrawerView);
+                }
+                
+                //rental인 경
+                else{
+                	
+                	switch(childClicked){
+                		
+                		case 0:
+                			break;
+                		case 1:
+                			
+                		
+                	}
+                	
+                }
+                */
+                
+                selectGroupItem(groupPosition);
+
+                return false;
+            }
+        });
+
+        exListView.setOnChildClickListener(new OnChildClickListener() {
+
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+
+            	Log.i("ajou", "onChildClick : " +  childPosition);
+                Log.d("CHECK", "child click");
+
+                int index = parent.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
+                parent.setItemChecked(index, true);
+
+                selectChildItem(childPosition);
+
+                return false;
+            }
+        });
+    }
+	
+	 private void selectGroupItem(int position) {
+	        selectedPosition = position;
+	        // update the main content by replacing fragments
+	       	        // update selected item and title, then close the drawer
+	        // mDrawerList.setItemChecked(selectedPosition, true);
+	        
+	        
+	        setTitle("hi");
+	        if(position == -1){
+	        	mainFragment = new MainFragment();
+	        	getFragmentManager().beginTransaction().replace(R.id.content_frame, mainFragment).commit();
+	        	mDrawerLayout.closeDrawer(navDrawerView);
+	        }
+	        else if(position == 0){
+	        	profileFragment = new ProfileFragment();
+	        	getFragmentManager().beginTransaction().replace(R.id.content_frame, profileFragment).commit();
+	        	mDrawerLayout.closeDrawer(navDrawerView);
+	        }
+	        else if(position == 1){
+	        	;
+	        }
+	        else{
+//	        	getFragmentManager().beginTransaction().replace(R.id.content_frame, ).commit();;
+	        }
+	    }
+	
+
+	 
+	 private void selectChildItem(int position) {
+	        selectedPosition = position;
+	        mDrawerLayout.closeDrawer(navDrawerView);
+
+	        // update the main content by replacing fragments
+	       	        // update selected item and title, then close the drawer
+	        // mDrawerList.setItemChecked(selectedPosition, true);
+	        
+	        if(position == 0){
+	        	rentalFragment = new RentalFragment();
+	        	getFragmentManager().beginTransaction().replace(R.id.content_frame, rentalFragment).commit();
+	        }
+	        else{
+	        	rentalFragment = new RentalFragment();
+	        	getFragmentManager().beginTransaction().replace(R.id.content_frame, rentalFragment).commit();
+	        }	        
+	        
+	        setTitle("hi");
+
+	    }
 	
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content view
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(exListView);
+        boolean drawerOpen = mDrawerLayout.isDrawerOpen(navDrawerView);
 //        menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
         
         
@@ -202,18 +390,21 @@ public class MainActivity extends ActionBarActivity {
 		else if(id == android.R.id.home){
 			Log.i("ajou", "click the up button");
 			
+			/*
 			switch(beforeSelected){
-			
 				case -1 : getFragmentManager().beginTransaction().detach(mainFragment).commit();break;
 				case 0 : getFragmentManager().beginTransaction().detach(profileFragment).commit();break;
 				case 1: getFragmentManager().beginTransaction().detach(rentalFragment).commit(); break;
 				case 2:break;
-			
 			}
 			beforeSelected = -1;
 			getFragmentManager().beginTransaction().attach(mainFragment).commit();
-			mDrawerList.setItemChecked(beforeSelected, true);
-			mDrawerLayout.closeDrawer(mDrawerList);
+//			mDrawerList.setItemChecked(beforeSelected, true);
+			 */
+			mainFragment = new MainFragment();
+			getFragmentManager().beginTransaction().replace(R.id.content_frame, mainFragment).commit();
+			
+			mDrawerLayout.closeDrawer(navDrawerView);
 			
 		}
 		return super.onOptionsItemSelected(item);
@@ -262,48 +453,6 @@ public class MainActivity extends ActionBarActivity {
 	
 	
 
-	/** Swaps fragments in the main content view */
-	private void selectItem(int position) {
-		// Create a new fragment and specify the planet to show based on
-		// position
-		FragmentManager fragmentManager = getFragmentManager();
-		
-		
-		switch(beforeSelected){
-		
-		case -1 : fragmentManager.beginTransaction().detach(mainFragment).commit();break;
-		case 0 : fragmentManager.beginTransaction().detach(mainFragment).commit();break;
-		case 1:fragmentManager.beginTransaction().detach(rentalFragment).commit(); break;
-		case 2:break;
-		}
-		beforeSelected = position;
-		
-		
-		
-		switch(position){
-		case 0 : Log.i("ajou", position+"");
-			fragmentManager.beginTransaction().attach( mainFragment).commit();
-			break;
-		case 1 : Log.i(TAG, position+"");
-			
-			fragmentManager.beginTransaction().attach(rentalFragment).commit();
-			break; 
-		case 2 : Log.i(TAG, position+"");break;
-		}
-		
-
-		// Highlight the selected item, update the title, and close the drawer
-		mDrawerList.setItemChecked(position, true);
-		setTitle(drawerNameList.get(position).getItemName());
-		mDrawerLayout.closeDrawer(mDrawerList);
-	}
-	/*
-	@Override
-	public void setTitle(CharSequence title) {
-		mTitle = title;
-		getActionBar().setTitle(mTitle);
-	}
-	*/
 	
 
 }

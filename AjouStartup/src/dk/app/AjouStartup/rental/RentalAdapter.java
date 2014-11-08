@@ -3,7 +3,6 @@ package dk.app.AjouStartup.rental;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.sax.StartElementListener;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -30,10 +29,26 @@ public class RentalAdapter extends RecyclerView.Adapter<RentalAdapter.ViewHolder
         public int size ; 
         public int mPosition;
         
-        public ViewHolder(View v) {
+        public ViewHolder(View v, Context context) {
             super(v);
             mCardView = (CardView) v;
             mImageView = (ImageView) v.findViewById(R.id.rental_grid_item_image);
+            
+            
+            final Context mContext = context;
+            
+            mCardView.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					Log.i("ajou", "on click in card view" + mPosition);
+
+					Intent intent = new Intent(mContext, ProductInfo.class);
+					intent.putExtra("position", mPosition);
+					mContext.startActivity(intent);
+				}
+			});
         }
     }
     // Provide a suitable constructor (depends on the kind of dataset)
@@ -47,23 +62,10 @@ public class RentalAdapter extends RecyclerView.Adapter<RentalAdapter.ViewHolder
         View v = LayoutInflater.from(parent.getContext())
                                .inflate(R.layout.layout_rental_grid_item, parent, false);
         final Context context = parent.getContext();
-        
-        v.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
-				Intent intent = new Intent(context, ProductInfo.class);
-				intent.putExtra("position", vh.mPosition);
-				context.startActivity(intent);
-				Log.i("ajou", "what?" + vh.mPosition+"");
-				
-			}
-		});
+     
         
         // set the view's size, margins, paddings and layout parameters
-        vh = new ViewHolder(v);
+        vh = new ViewHolder(v,  context);
         return vh;
     }
 

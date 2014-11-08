@@ -1,10 +1,12 @@
 package dk.app.AjouStartup;
 
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 
 
-public abstract class EndlessScrollListener implements OnScrollListener {
+public class EndlessScrollListener extends RecyclerView.OnScrollListener {
     // The minimum amount of items to have below your current scroll position
     // before loading more.
     private int visibleThreshold = 5;
@@ -30,44 +32,26 @@ public abstract class EndlessScrollListener implements OnScrollListener {
         this.currentPage = startPage;
     }
 
-    // This happens many times a second during a scroll, so be wary of the code you place here.
-    // We are given a few useful parameters to help us work out if we need to load some more data,
-    // but first we check if we are waiting for the previous load to finish.
+    
+    
     @Override
-    public void onScroll(AbsListView view,int firstVisibleItem,int visibleItemCount,int totalItemCount) 
-        {
-        // If the total item count is zero and the previous isn't, assume the
-        // list is invalidated and should be reset back to initial state
-        if (totalItemCount < previousTotalItemCount) {
-            this.currentPage = this.startingPageIndex;
-            this.previousTotalItemCount = totalItemCount;
-            if (totalItemCount == 0) { this.loading = true; } 
-        }
-
-        // If it’s still loading, we check to see if the dataset count has
-        // changed, if so we conclude it has finished loading and update the current page
-        // number and total item count.
-        if (loading && (totalItemCount > previousTotalItemCount)) {
-            loading = false;
-            previousTotalItemCount = totalItemCount;
-            currentPage++;
-        }
-
-        // If it isn’t currently loading, we check to see if we have breached
-        // the visibleThreshold and need to reload more data.
-        // If we do need to reload some more data, we execute onLoadMore to fetch the data.
-        if (!loading && (totalItemCount - visibleItemCount)<=(firstVisibleItem + visibleThreshold)) {
-            onLoadMore(currentPage + 1, totalItemCount);
-            loading = true;
-        }
+    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+    	// TODO Auto-generated method stub
+    	super.onScrolled(recyclerView, dx, dy);
+    	
+    	
+    	Log.i("ajou", "onscrolled : " + dx + " , "+ dy );
     }
-
-    // Defines the process for actually loading more data based on page
-    public abstract void onLoadMore(int page, int totalItemsCount);
-
+    
     @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState) {
-        // Don't take any action on changed
+    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+    	// TODO Auto-generated method stub
+    	
+    	
+    	super.onScrollStateChanged(recyclerView, newState);
     }
+    
+    
+    
 }
 
