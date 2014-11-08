@@ -35,9 +35,12 @@ public class MainFragment extends Fragment {
 			  recyclerView.setHasFixedSize(true);
 			
 		}
+		/*
 		else{
 			((ViewGroup)view.getParent()).removeView(view);
-		}
+		}*/
+		
+		
 		return view;
 	}
 	

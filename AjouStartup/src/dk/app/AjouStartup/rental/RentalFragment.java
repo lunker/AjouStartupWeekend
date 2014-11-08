@@ -1,5 +1,8 @@
-package dk.app.AjouStartup;
+package dk.app.AjouStartup.rental;
 
+import dk.app.AjouStartup.R;
+import dk.app.AjouStartup.R.id;
+import dk.app.AjouStartup.R.layout;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -27,16 +30,22 @@ public class RentalFragment extends Fragment {
 			recycleView = (RecyclerView) view.findViewById(R.id.rental_fragment_recycler_view);
 			recycleView.setHasFixedSize(true);
 			
-			mLayoutManager = new GridLayoutManager(getActivity(), 1);
+			mLayoutManager = new GridLayoutManager(getActivity(), 2);
 			recycleView.setLayoutManager(mLayoutManager);
 			
-			MyAdapter adapter = new MyAdapter(strDataSet); 
+//			MyAdapter adapter = new MyAdapter(strDataSet); 
+			RentalAdapter adapter = new RentalAdapter();
+			
+			
 			recycleView.setAdapter(adapter);
 			
 		}
+		/*
 		else{
 			((ViewGroup)view.getParent()).removeView(view);
 		}
+		*/
+		
 
 		return view;
 	}

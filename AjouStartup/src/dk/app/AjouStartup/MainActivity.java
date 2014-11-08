@@ -2,6 +2,9 @@ package dk.app.AjouStartup;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import dk.app.AjouStartup.profile.ProfileFragment;
+import dk.app.AjouStartup.rental.RentalFragment;
 import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -17,6 +20,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
@@ -35,16 +39,16 @@ public class MainActivity extends ActionBarActivity {
 	private final String TAG = "ajou";
 	
 	
-//	private String[] drawerNameList = {"profile", "rental service", "communication"};
 	private ListView mDrawerList;
 	private List<DrawerItem> drawerNameList = null;
 	
 	private FragmentManager manager ; 
 	private Fragment mainFragment = null;
 	private Fragment rentalFragment = null;
-	
+	private Fragment profileFragment = null;
 	
 	private int beforeSelected = -1;
+	String[] categorys = {"profile", "rental", "communication"};
 	
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
 	@Override
@@ -53,7 +57,7 @@ public class MainActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_main);
 	
 
-//		drawerNameList = getResources().getStringArray(R.array.drawer_test);
+		Log.i("ajou", "asdf");
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 		
@@ -62,14 +66,16 @@ public class MainActivity extends ActionBarActivity {
 		drawerNameList.add(new DrawerItem("Rental Service"));
 		drawerNameList.add(new DrawerItem("Communication"));
 		
-		
 		drawerAdapter = new MyDrawerAdapter(this, drawerNameList);
 		
 		// Set the adapter for the list view
-		mDrawerList.setAdapter( drawerAdapter);
+		
 		// Set the list's click listener
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
+//		mDrawerList.setAdapter( drawerAdapter);
+		mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+	               android.R.layout.simple_list_item_1, categorys));
+		  
 		mTitle = mDrawerTitle = getTitle();
 		
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
@@ -98,16 +104,24 @@ public class MainActivity extends ActionBarActivity {
 		// Set the drawer toggle as the DrawerListener
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//		getActionBar().setDisplayHomeAsUpEnabled(tru”e);
-//	    getActionBar().setHomeButtonEnabled(true);
 		
-		mainFragment = new MainFragment();
-		rentalFragment = new RentalFragment();
-
-		manager = getFragmentManager();
-		FragmentTransaction ft = manager.beginTransaction();
-		ft.add(R.id.drawer_layout, mainFragment).add(R.id.drawer_layout, rentalFragment).detach(rentalFragment);
-		ft.commit();
+		if(mainFragment == null){
+			
+			mainFragment = new MainFragment();
+			rentalFragment = new RentalFragment();
+			profileFragment = new ProfileFragment();
+			
+			
+			manager = getFragmentManager();
+			FragmentTransaction ft = manager.beginTransaction();
+			ft.add(R.id.content_frame, mainFragment)
+			.add(R.id.content_frame, rentalFragment)
+			.add(R.id.content_frame,profileFragment)
+			.detach(rentalFragment)
+			.detach(profileFragment);
+			ft.commit();
+		}
+		
 		
 
 	}
@@ -140,26 +154,72 @@ public class MainActivity extends ActionBarActivity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
+		
 		if (id == R.id.action_settings) {
 			return true;
+		}
+		else if(id == android.R.id.home){
+			Log.i("ajou", "click the up button");
+			
+			switch(beforeSelected){
+			
+				case -1 : getFragmentManager().beginTransaction().detach(mainFragment).commit();break;
+				case 0 : getFragmentManager().beginTransaction().detach(profileFragment).commit();break;
+				case 1: getFragmentManager().beginTransaction().detach(rentalFragment).commit(); break;
+				case 2:break;
+			
+			}
+			beforeSelected = -1;
+			getFragmentManager().beginTransaction().attach(mainFragment).commit();
+			mDrawerList.setItemChecked(beforeSelected, true);
+			mDrawerLayout.closeDrawer(mDrawerList);
+			
 		}
 		return super.onOptionsItemSelected(item);
 	}
 	
 	// nagivation drawer
-	private class DrawerItemClickListener implements
-			ListView.OnItemClickListener {
+	class DrawerItemClickListener implements ListView.OnItemClickListener {
 
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
 			// TODO Auto-generated method stub
-			Log.i("dk", "onitemclick");
-			selectItem(position);
+			Log.i("ajou", "on drawerClick");
+//			selectItem(position);
+			FragmentManager fragmentManager = getFragmentManager();
+			
+			
+			switch(beforeSelected){
+			
+			case -1 : fragmentManager.beginTransaction().detach(mainFragment).commit();break;
+			case 0 : fragmentManager.beginTransaction().detach(profileFragment).commit();break;
+			case 1: fragmentManager.beginTransaction().detach(rentalFragment).commit(); break;
+			case 2:break;
+			}
+			beforeSelected = position;
+			
+			
+			
+			switch(position){
+			case 0 : Log.i("ajou", "select the :"+ position+"");
+				getFragmentManager().beginTransaction().attach( profileFragment).commit();
+				break;
+			case 1 : Log.i(TAG, "select the :"+ position+"");
+				getFragmentManager().beginTransaction().attach(rentalFragment).commit();
+				break; 
+			case 2 : Log.i(TAG, "select the :"+ position+"");break;
+			}
+
+			// Highlight the selected item, update the title, and close the drawer
+			mDrawerList.setItemChecked(position, true);
+			setTitle(drawerNameList.get(position).getItemName());
+			mDrawerLayout.closeDrawer(mDrawerList);
 			
 		}
-
 	}
+	
+	
 
 	/** Swaps fragments in the main content view */
 	private void selectItem(int position) {

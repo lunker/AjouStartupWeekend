@@ -57,6 +57,7 @@ public class MyDrawerAdapter extends BaseAdapter {
 
               view = inflater.inflate(R.layout.drawer_list_item, parent, false);
               drawerHolder.userName = (TextView) view.findViewById(R.id.user_profile_name);
+              
               drawerHolder.itemName = (TextView) view.findViewById(R.id.drawer_list_item_name);
               drawerHolder.headerLayout = (LinearLayout) view.findViewById(R.id.headerLayout);
               drawerHolder.itemLayout = (LinearLayout) view.findViewById(R.id.itemLayout);
@@ -78,7 +79,6 @@ public class MyDrawerAdapter extends BaseAdapter {
             drawerHolder.itemLayout.setVisibility(LinearLayout.INVISIBLE);
             drawerHolder.spinnerLayout.setVisibility(LinearLayout.VISIBLE);
             
-            
       	  
             drawerHolder.userName.setText(drawerItemList.get(position).getItemName());	
             drawerHolder.icon.setImageResource(R.drawable.ic_launcher);
@@ -89,14 +89,9 @@ public class MyDrawerAdapter extends BaseAdapter {
               drawerHolder.headerLayout.setVisibility(LinearLayout.INVISIBLE);
               drawerHolder.spinnerLayout.setVisibility(LinearLayout.INVISIBLE);
               drawerHolder.itemLayout.setVisibility(LinearLayout.VISIBLE);
-
               
               drawerHolder.itemName.setText( drawerItemList.get(position).getItemName());
-              
-              
-
         }
-        
         return view;
   }
 

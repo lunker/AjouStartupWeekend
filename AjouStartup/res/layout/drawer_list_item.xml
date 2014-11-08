@@ -30,6 +30,7 @@
 
     <!-- for menu explanation  -->
     <LinearLayout
+        android:background="#ff0000"
         android:id="@+id/headerLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -63,6 +64,7 @@
         android:orientation="vertical" >
 
         <LinearLayout
+            android:clickable="true"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:minHeight="55dp" >
@@ -76,7 +78,7 @@
                 android:id="@+id/drawer_list_item_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                 android:textColor ="#F2F1DC"
+                android:textColor ="#F2F1DC"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
         </LinearLayout>
 
