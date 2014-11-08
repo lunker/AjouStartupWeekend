@@ -17,6 +17,7 @@ import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
@@ -42,9 +43,6 @@ public class MainActivity extends ActionBarActivity {
 	/*
 	 * drawer
 	 */
-	private final String MAINPRODUCTNAME = "mtest";
-	private final String MAINPRODUCTEXTEN = ".jpg";
-	
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private CharSequence mDrawerTitle;
@@ -80,9 +78,7 @@ public class MainActivity extends ActionBarActivity {
 
          final float scale = getResources().getDisplayMetrics().density;
             int px = (int) (dp * scale + 0.5f);
-
         return px;
-
     }
 	
 	
@@ -92,7 +88,7 @@ public class MainActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 	
-		Log.i("ajou",getpixels(65)+"");
+		Log.i("ajou",getpixels(200)+"");
 //		MainThread th = new MainThread();
 //		th.start();
 		
@@ -111,6 +107,8 @@ public class MainActivity extends ActionBarActivity {
 		// Set the adapter for the list view
 		
 		// Set the list's click listener
+		
+		
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 //		mDrawerList.setAdapter( drawerAdapter);
 //		mDrawerList.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, categorys));
@@ -128,13 +126,6 @@ public class MainActivity extends ActionBarActivity {
 		subCategory.put("rental", rentalCategroy);
 		subCategory.put("communication", new ArrayList<String>());
 		
-		  MainThread[] th = new MainThread[4];
-		  for(int i = 0 ; i < 4 ; i++)
-		  {
-			  
-			  th[i] = new MainThread(i);
-			  th[i].start();
-		  }
 //		mDrawerList.setAdapter(new MyExpandableAdapter(this, mainCategory, subCategory));
 //		mDrawerList.setChoiceMode(ExpandableListView.CHOICE_MODE_SINGLE);
 		/*
@@ -316,68 +307,7 @@ public class MainActivity extends ActionBarActivity {
 		}
 	}
 	
-	class MainThread extends Thread {
-		
-		int i = 0 ;
-		
-		public MainThread(int i ){
-			this.i = i ;
-		}
-		@Override
-		public void run() {
-			// TODO Auto-generated method stub
-			  String SERVER = "http://192.168.43.137:8787";
-//			GlobalVariable global = (GlobalVariable)getActivity();
-			
-			HttpClient client = new DefaultHttpClient();
-			HttpGet get = new HttpGet(SERVER);
-			
-			try {
-				get.addHeader("id",i+"");
-				get.addHeader("state", "main");
-				HttpResponse response = client.execute(get);
-				Log.i("ajou", "get the response in main thread");
-				Log.i("ajou", response.getHeaders("hi")[0].toString());
-				
-				
-				Bitmap bitmap = BitmapFactory.decodeStream(response.getEntity().getContent());
-//	    		Bitmap bitmap = GlobalVariable.decodeSampledBitmapFromFileInputStream(response.getEntity().getContent(), 80, 80);
-				
-				Log.i("ajou", getCacheDir().getAbsolutePath());
-	    		File file = new File(getCacheDir().getAbsolutePath()+"/"+ MAINPRODUCTNAME+i+MAINPRODUCTEXTEN);
-	    		/*
-	    		if( !file.exists()){
-	    			file.createNewFile();
-	    			FileOutputStream out = new FileOutputStream(file);
-	    			bitmap.compress(CompressFormat.PNG, 100, out);
-	    			out.close();
-	    			Log.i("clientApp", "write image to cache");
-	    		}
-	    		else{
-	    			FileOutputStream out = new FileOutputStream(file);
-	    			bitmap.compress(CompressFormat.PNG, 100, out);
-	    			out.close();
-	    			Log.i("clientApp", "write image to cache");
-	    		}
-				
-				*/
-	    		FileOutputStream out = new FileOutputStream(file);
-    			bitmap.compress(CompressFormat.JPEG, 100, out);
-    			out.close();
-    			Log.i("clientApp", "write image to cache");
-	    		
-				
-			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			
-		}
-	}
+	
 
 	/** Swaps fragments in the main content view */
 	private void selectItem(int position) {

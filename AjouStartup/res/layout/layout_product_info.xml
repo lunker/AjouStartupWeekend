@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="450dp"
-    android:layout_height="500dp"
+    android:layout_height="400dp"
     android:background="#FFFFFF"
     android:orientation="vertical" >
 
@@ -11,37 +11,109 @@
         android:layout_height="fill_parent" >
 
         <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
+            android:layout_width="match_parent"
+            android:layout_height="600dp" >
 
             <ImageView
-                android:layout_marginLeft="25dp"
-                
                 android:id="@+id/product_image"
-                android:layout_width="250dp"
-                android:layout_height="300dp"
-                android:src="@drawable/test2" >
-            </ImageView>
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginLeft="60dp"
+                android:src="@drawable/test2" />
 
-            <TextView
-                android:id="@+id/product_name"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/product_info_layout_date"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-				android:layout_below="@id/product_image"                
-                android:layout_marginTop="20dp"
-                android:text="asdfadsf" >
-            </TextView>
-
-            <RelativeLayout
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:layout_below="@id/product_name">
+                android:layout_below="@id/product_image"
+                android:layout_marginLeft="20dp"
+                android:orientation="horizontal" >
 
                 <TextView
+                    android:id="@+id/product_info_rental_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="렌탈 기간 :    " />
+
+                <TextView
+                    android:id="@+id/product_info_rental_date_from"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="100 " />
+
+                <TextView
+                    android:id="@+id/product_info_rental_date_to"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="300 " />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/product_info_layout_color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/product_info_color_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="후기 !!!!!!" />
-            </RelativeLayout>
+                    android:text="색상" />
+
+                <ImageView
+                    android:id="@+id/product_info_color"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="#00D8FF" >
+                </ImageView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/product_info_layout_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/product_info_price_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="가격" />
+
+                <TextView
+                    android:id="@+id/product_info_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2000" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/product_info_layout_ps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/product_info_layout_date"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/product_info_ps_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="후기"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/product_info_ps_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <Button
+                    android:id="@+id/product_info_btn_purchase"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="구매" />
+            </LinearLayout>
         </RelativeLayout>
     </ScrollView>
 

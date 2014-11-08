@@ -1,5 +1,7 @@
 package dk.app.AjouStartup;
 
+import com.google.android.gms.internal.pa;
+
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +16,8 @@ import android.widget.TextView;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
   
 	
+	
+	GlobalVariable global = null;
 	
 	
 //	private 
@@ -50,9 +54,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int viewType) {
         // create a new view
+    	global = (GlobalVariable ) parent.getContext().getApplicationContext();
         View v = LayoutInflater.from(parent.getContext())
                                .inflate(R.layout.layout_main_activity_card_view, parent, false);
-        
         
         // set the view's size, margins, paddings and layout parameters
         ViewHolder vh = new ViewHolder(v);
@@ -65,7 +69,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.mTextView.setText(strDataSet[position]);
-        holder.mImageView.setImageBitmap(BitmapFactory.decodeFile("/data/data/dk.app.AjouStartup/cache/"+"mtest"+ position+".jpg"));
+        holder.mImageView.setImageBitmap(BitmapFactory.decodeFile("/data/data/dk.app.AjouStartup/files/"+"mp"+ position+".jpeg"));
 
     }
 

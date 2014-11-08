@@ -2,6 +2,7 @@ package dk.app.AjouStartup.rental;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.sax.StartElementListener;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -29,14 +30,10 @@ public class RentalAdapter extends RecyclerView.Adapter<RentalAdapter.ViewHolder
             super(v);
             mCardView = (CardView) v;
             mImageView = (ImageView) v.findViewById(R.id.rental_grid_item_image);
-            
         }
     }
-
     // Provide a suitable constructor (depends on the kind of dataset)
   
-    
-
     // Create new views (invoked by the layout manager)
     @Override
     public RentalAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
@@ -56,7 +53,6 @@ public class RentalAdapter extends RecyclerView.Adapter<RentalAdapter.ViewHolder
 			}
 		});
         
-        
         // set the view's size, margins, paddings and layout parameters
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -68,7 +64,7 @@ public class RentalAdapter extends RecyclerView.Adapter<RentalAdapter.ViewHolder
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         
-        holder.mImageView.setImageResource(R.drawable.test2);
+        holder.mImageView.setImageBitmap(BitmapFactory.decodeFile("/data/data/dk.app.AjouStartup/files/"+"mp"+ position+".jpeg"));
 
     }
 
