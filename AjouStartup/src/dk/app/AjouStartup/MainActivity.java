@@ -90,7 +90,7 @@ public class MainActivity extends ActionBarActivity {
 		Log.i("ajou", "asdf");
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 //		mDrawerList = (ExpandableListView) findViewById(R.id.left_drawer);
-//		mDrawerList = (ListView) findViewById(R.id.left_drawer);
+		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 		
 		drawerNameList = new ArrayList<DrawerItem>();
 		drawerNameList.add(new DrawerItem("profile",true));
@@ -104,7 +104,7 @@ public class MainActivity extends ActionBarActivity {
 //		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 //		mDrawerList.setAdapter( drawerAdapter);
 //		mDrawerList.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, categorys));
-//		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.test_test, categorys));
+		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.test_test, categorys));
 		
 		mainCategory = new ArrayList<String>();
 		mainCategory.add("profile");
@@ -164,73 +164,6 @@ public class MainActivity extends ActionBarActivity {
 			ft.commit();
 		}
 		
-		
-		/**
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 */
-		
-		mGroupList = new ArrayList<String>();
-        mChildList = new ArrayList<ArrayList<String>>();
-        mChildListContent = new ArrayList<String>();
- 
-        mGroupList.add("가위");
-        mGroupList.add("바위");
-        mGroupList.add("보");
- 
-        mChildListContent.add("1");
-        mChildListContent.add("2");
-        mChildListContent.add("3");
- 
-        mChildList.add(mChildListContent);
-        mChildList.add(mChildListContent);
-        mChildList.add(mChildListContent);
- 
-        exListView = (ExpandableListView) findViewById(R.id.elv_list);
-        exListView.setAdapter(new BaseExpandableAdapter(this, mGroupList, mChildList));
-         
-        // 그룹 클릭 했을 경우 이벤트
-        exListView.setOnGroupClickListener(new OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v,
-                    int groupPosition, long id) {
-                Toast.makeText(getApplicationContext(), "g click = " + groupPosition, 
-                        Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
-         
-        // 차일드 클릭 했을 경우 이벤트
-        exListView.setOnChildClickListener(new OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v,
-                    int groupPosition, int childPosition, long id) {
-                Toast.makeText(getApplicationContext(), "c click = " + childPosition, 
-                        Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
-         
-        // 그룹이 닫힐 경우 이벤트
-        exListView.setOnGroupCollapseListener(new OnGroupCollapseListener() {
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-                Toast.makeText(getApplicationContext(), "g Collapse = " + groupPosition, 
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-         
-        // 그룹이 열릴 경우 이벤트
-        exListView.setOnGroupExpandListener(new OnGroupExpandListener() {
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                Toast.makeText(getApplicationContext(), "g Expand = " + groupPosition, 
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
 
 	}
 	
@@ -238,7 +171,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content view
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+        boolean drawerOpen = mDrawerLayout.isDrawerOpen(exListView);
 //        menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
         
         
