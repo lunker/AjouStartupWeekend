@@ -1,9 +1,23 @@
 package dk.app.AjouStartup.rental;
 
+import java.io.IOException;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import android.app.Activity;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -17,16 +31,36 @@ public class ProductInfo extends Activity {
 	private TextView tv = null;
 	private ImageView iv = null;
 	private ImageView ivColor = null;
+	private int position = -1;
+	private Typeface mTypeface;
 	
+	private TextView rentalFrom;
+	private TextView rentalTo;
+	private TextView rentalPrice;
+	private TextView rentalPS;
+	
+	
+	private String from = ""; 
+	private String to = "";
+	private String price = "";
+	private String ps = "";
+	
+	Handler mHandler = new Handler(){
+	     public void handleMessage(Message msg) {
+	      if(msg.what==0){
+	    	  rentalFrom.setText(from);
+	    	  rentalTo.setText(to);
+	    	  rentalPS.setText(ps);
+	    	  rentalPrice.setText(price);
+	      }
+	};
+	};
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
-		
-
 		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
@@ -35,18 +69,80 @@ public class ProductInfo extends Activity {
 		getWindow().setAttributes(layoutParams);
 		setContentView(R.layout.layout_product_info);
 		
-//		tv = (TextView) findViewById(R.id.product_name);
-//		tv.setTypeface(typeface);
-		
-		
-
-		int position = getIntent().getExtras().getInt("position");
+		mTypeface = Typeface.createFromAsset(getAssets(), "robotobold.ttf.mp3");
+	    ViewGroup root = (ViewGroup) findViewById(android.R.id.content);
+	    setGlobalFont(root);
+	    
+		position = getIntent().getExtras().getInt("position");
 		iv = (ImageView) findViewById(R.id.product_image);
-		iv.setImageBitmap(BitmapFactory.decodeFile("/data/data/dk.app.AjouStartup/files/"+"mp"+ position+".jpeg"));
+		iv.setImageBitmap(BitmapFactory.decodeFile("/storage/emulated/0/DCIM/test/"+"mp"+ position+".jpeg"));
 		
 		ivColor = (ImageView) findViewById(R.id.product_info_color);
 		ivColor.setBackgroundColor(Color.parseColor("#303030"));
+
 		
+		MyThread th = new MyThread(mHandler);
+		th.start();
+		
+		rentalFrom = (TextView) findViewById(R.id.product_info_rental_date_from);
+		rentalTo = (TextView) findViewById(R.id.product_info_rental_date_to);
+		rentalPrice = (TextView) findViewById(R.id.product_info_price);
+		rentalPS = (TextView) findViewById(R.id.product_info_ps_content);
 		
 	}
+	void setGlobalFont(ViewGroup root) {
+	    
+		for (int i = 0; i < root.getChildCount(); i++) {
+	        View child = root.getChildAt(i);
+	        if (child instanceof TextView)
+	            ((TextView)child).setTypeface(mTypeface,Typeface.BOLD);
+	        else if (child instanceof ViewGroup)
+	            setGlobalFont((ViewGroup)child);
+	    }
+	}
+	
+	
+	class MyThread extends Thread{
+		
+		String SERVER = "http://192.168.43.137:8787";
+		Handler handler = null;
+		
+		public MyThread(Handler handler){
+			this.handler = handler; 
+		}
+		
+		@Override
+		public void run() {
+			// TODO Auto-generated method stub
+			
+			HttpClient client = new DefaultHttpClient();
+			HttpGet get = new HttpGet(SERVER);
+			
+			try {
+				get.addHeader("state", "getdetail");
+				get.addHeader("productid", position+"");
+				HttpResponse response = client.execute(get);
+				
+				for(int i = 0 ; i < response.getAllHeaders().length;i++)
+					Log.i("ajou", "test the thread : get the respon" + response.getAllHeaders()[i].toString());
+				
+				from = (response.getHeaders("rentalFrom"))[0].getValue();
+				to = (response.getHeaders("rentalTo"))[0].getValue();
+				ps = (response.getHeaders("ps"))[0].getValue();
+				price =( response.getHeaders("rentalPrice")[0]).getValue();
+				
+				handler.sendEmptyMessage(0);
+				
+				Log.i("ajou", "test the thread : " + from);
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 }
+	
+

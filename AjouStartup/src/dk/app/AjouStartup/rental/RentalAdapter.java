@@ -1,5 +1,7 @@
 package dk.app.AjouStartup.rental;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -20,6 +22,12 @@ public class RentalAdapter extends RecyclerView.Adapter<RentalAdapter.ViewHolder
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
+	
+	ArrayList<String> dataset = new ArrayList<String>();
+	public RentalAdapter(ArrayList<String> dataset){
+		this.dataset = dataset;
+		
+	}
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
 		
@@ -75,7 +83,7 @@ public class RentalAdapter extends RecyclerView.Adapter<RentalAdapter.ViewHolder
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         
-        holder.mImageView.setImageBitmap(BitmapFactory.decodeFile("/data/data/dk.app.AjouStartup/files/"+"mp"+ position+".jpeg"));
+        holder.mImageView.setImageBitmap(BitmapFactory.decodeFile("/storage/emulated/0/DCIM/test/"+"mp"+ position+".jpeg"));
         holder.mPosition = position;
         Log.i("ajou", "onbindview pos: " + position);
     }
@@ -83,7 +91,7 @@ public class RentalAdapter extends RecyclerView.Adapter<RentalAdapter.ViewHolder
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return 10;
+        return dataset.size();
     }
 	
 }

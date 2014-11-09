@@ -39,15 +39,11 @@ public class MainFragment extends Fragment {
 	private final String MAINPRODUCTNAME = "mtest";
 	private final String MAINPRODUCTEXTEN = ".PNG";
 	
-	
-	/*
-	 * (non-Javadoc)
-	 * @see android.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
-	 */
+
 	
 	private int previousTotal = 0;
 	private boolean loading = true;
-	private int visibleThreshold = 4;
+	private int visibleThreshold = 2;
 	int firstVisibleItem, visibleItemCount, totalItemCount, lastOne;
 	
 	@Override
@@ -76,20 +72,16 @@ public class MainFragment extends Fragment {
 				        super.onScrolled(recyclerView, dx, dy);
 
 				        visibleItemCount = recyclerView.getChildCount();
-				        totalItemCount = layoutManager.getItemCount();
-				        firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
-				        
 				        lastOne = layoutManager.findLastVisibleItemPosition();
-
-			            if (loading) {
-			                if ( lastOne >= visibleThreshold-1) {
-			                    loading = false;
+				        
+			                if ( (visibleItemCount - lastOne) <= visibleThreshold) {
 			                    
 			                    dataSet.add("99");
-			                    adapter.notifyItemInserted(recyclerView.getChildCount());
-			                    Log.v("...", "Last Item Wow !");
+//			                    adapter.notifyItemInserted(recyclerView.getChildCount());
+			                    adapter.notifyDataSetChanged();
+			                    adapter.notifyItemRangeInserted(0, dataSet.size());
+			                    Log.i("ajou", "at end. . .");
 			                }
-			            }
 				    }
 			  });
 			  
@@ -115,7 +107,6 @@ public class MainFragment extends Fragment {
 		 
 		  // specify an adapter (see also next example) 
 		  adapter = new MyAdapter(dataSet); 
-		  
 		  recyclerView.setAdapter(adapter);
 		
 	}

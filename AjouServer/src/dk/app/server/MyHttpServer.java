@@ -1,11 +1,5 @@
 package dk.app.server;
 
-import java.io.File;
-import java.io.IOException;
-
-import net.coobird.thumbnailator.Thumbnails;
-import net.coobird.thumbnailator.name.Rename;
-
 import org.vertx.java.core.AsyncResult;
 import org.vertx.java.core.Handler;
 import org.vertx.java.core.MultiMap;
@@ -59,7 +53,6 @@ public class MyHttpServer extends Verticle {
 					//test
 					//send the image to client by http get.
 					if(req.headers().get("state").equals("main")){
-
 						
 						String path = "/Users/lunker/Desktop/";
 						String id = req.headers().get("id");
@@ -78,8 +71,41 @@ public class MyHttpServer extends Verticle {
 							}
 						});
 //						req.response().write("id");
-						
 					}//end if
+					else if(req.headers().get("state").equals("getdetail")){
+						
+						int id = Integer.parseInt(req.headers().get("productid"));
+						
+						JsonObject find = new JsonObject();
+						find.putString("action", "find");
+						find.putString("collection", "product");
+						find.putObject("matcher", new JsonObject().putNumber("productid",  id ));
+						eventBus.send("database.my", find, new Handler<Message<JsonObject>>() {
+							
+							@Override
+							public void handle(Message<JsonObject> result) {
+								// TODO Auto-generated method stub
+								
+								System.out.println("find the product info !!");
+								System.out.println("result nickname : " + result.body().getArray("results").toString());
+								JsonObject tmp =  result.body().getArray("results").get(0);
+//								tmp.getString("nickname");
+//								System.out.println("result at 1 : " + result.body().getArray("results").get(2));
+//								req.response().sendFile(url);
+								
+								req.response().headers().add("rentalFrom", tmp.getString("rentalFrom"));
+								req.response().headers().add("rentalTo", tmp.getString("rentalTO"));
+								req.response().headers().add("rentalPrice", tmp.getNumber("rentalprice")+"");
+								req.response().headers().add("ps", tmp.getString("ps"));
+								req.response().setChunked(true);
+//								req.response().headers().add("Content-Length", "1");
+								req.response().write("asd");
+								req.response().end();
+								
+							}
+						});
+						
+					}
 					
 				}// end get
 				

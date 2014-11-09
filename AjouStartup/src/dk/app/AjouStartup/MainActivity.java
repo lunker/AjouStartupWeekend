@@ -72,6 +72,7 @@ public class MainActivity extends ActionBarActivity {
     HashMap<String, List<String>> listDataChild;
     CustomExpandAdapter customAdapter;
     private LinearLayout navDrawerView;
+    private BackPressCloseHandler backPressCloseHandler;
     
     /*
      * 
@@ -116,10 +117,8 @@ public class MainActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_main);
 	
 		Log.i("ajou",getpixels(200)+"");
-//		MainThread th = new MainThread();
-//		th.start();
+		backPressCloseHandler = new BackPressCloseHandler(this);
 		
-		Log.i("ajou", "asdf");
 		navDrawerView = (LinearLayout) findViewById(R.id.navDrawerView);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 //		mDrawerList = (ExpandableListView) findViewById(R.id.left_drawer);
@@ -307,7 +306,15 @@ public class MainActivity extends ActionBarActivity {
         });
     }
 	
-	 private void selectGroupItem(int position) {
+	
+	@Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        backPressCloseHandler.onBackPressed();
+    }
+	
+	
+	private void selectGroupItem(int position) {
 	        selectedPosition = position;
 	        // update the main content by replacing fragments
 	       	        // update selected item and title, then close the drawer

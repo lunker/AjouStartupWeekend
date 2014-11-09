@@ -5,6 +5,5 @@
 	<classpathentry exported="true" kind="lib" path="/Users/lunker/vert.x-2.1M5/lib/vertx-core-2.1M5.jar"/>
 	<classpathentry exported="true" kind="lib" path="/Users/lunker/vert.x-2.1M5/lib/vertx-hazelcast-2.1M5.jar"/>
 	<classpathentry exported="true" kind="lib" path="/Users/lunker/vert.x-2.1M5/lib/vertx-platform-2.1M5.jar"/>
-	<classpathentry exported="true" kind="lib" path="/Users/lunker/Downloads/thumbnailator-0.4.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

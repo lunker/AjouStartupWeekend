@@ -16,7 +16,7 @@ public class DBVerticle extends Verticle {
 		mongoDBConfig.putString("address","database.my");
 		mongoDBConfig.putString("host", "localhost");
 		mongoDBConfig.putNumber("port", 27017);
-		mongoDBConfig.putString("db_name","superdb");
+		mongoDBConfig.putString("db_name","ajoudb");
 		mongoDBConfig.putString("username", "superapp_dk");
 		mongoDBConfig.putString("password", "794686h");
 	}
