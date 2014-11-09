@@ -229,61 +229,6 @@ public class MainActivity extends ActionBarActivity {
                 
                 String parentTitle = ((String) customAdapter.getGroup(groupPosition));
 
-                /*
-                if (!parentTitle.equals("rental")){
-                	
-                	switch(isShowing){
-                	
-                	//group
-                		case 0:
-                			
-                			break;
-                			
-                		case 1:
-                			
-                			break;
-                	}
-                	
-                	switch(groupClicked){
-                	case -1:
-                		
-                		break;
-                	case 0:
-                		getFragmentManager().beginTransaction().detach(fragment)
-                		break;
-                	case 1:break;
-                	case 2: break;
-                	}
-                	
-                	//attach fragment
-                	switch(groupPosition){
-                	case -1: getFragmentManager().beginTransaction().attach(mainFragment).commit()break;
-                	case 0: getFragmentManager().beginTransaction().attach(profileFragment).commit()break;
-                	case 2: break;
-                	
-                	}
-                	
-                	isShowing = 0;
-                	groupClicked = groupPosition;
-                	
-                	
-                    mDrawerLayout.closeDrawer(navDrawerView);
-                }
-                
-                //rental인 경
-                else{
-                	
-                	switch(childClicked){
-                		
-                		case 0:
-                			break;
-                		case 1:
-                			
-                		
-                	}
-                	
-                }
-                */
                 
                 selectGroupItem(groupPosition);
 
@@ -291,6 +236,9 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+        
+        
+        
         exListView.setOnChildClickListener(new OnChildClickListener() {
 
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
@@ -323,13 +271,15 @@ public class MainActivity extends ActionBarActivity {
 	        // mDrawerList.setItemChecked(selectedPosition, true);
 	        
 	        
-	        setTitle("hi");
+//	        setTitle("hi");
 	        if(position == -1){
 	        	mainFragment = new MainFragment();
 	        	getFragmentManager().beginTransaction().replace(R.id.content_frame, mainFragment).commit();
+	        	setTitle("Main");
 	        	mDrawerLayout.closeDrawer(navDrawerView);
 	        }
 	        else if(position == 0){
+	        	setTitle("Profile");
 	        	profileFragment = new ProfileFragment();
 	        	getFragmentManager().beginTransaction().replace(R.id.content_frame, profileFragment).commit();
 	        	mDrawerLayout.closeDrawer(navDrawerView);
@@ -338,6 +288,7 @@ public class MainActivity extends ActionBarActivity {
 	        	;
 	        }
 	        else{
+	        	setTitle("Communication");
 	        	Fragment cmcFragment = new CommunicationFragment();
 	        	getFragmentManager().beginTransaction().replace(R.id.content_frame, cmcFragment).commit();
 	        	mDrawerLayout.closeDrawer(navDrawerView);
@@ -355,10 +306,12 @@ public class MainActivity extends ActionBarActivity {
 	        // mDrawerList.setItemChecked(selectedPosition, true);
 	        
 	        if(position == 0){
+	        	setTitle("Rental");
 	        	rentalFragment = new RentalFragment();
 	        	getFragmentManager().beginTransaction().replace(R.id.content_frame, rentalFragment).commit();
 	        }
 	        else{
+	        	setTitle("Rental");
 	        	rentalFragment = new RentalFragment();
 	        	getFragmentManager().beginTransaction().replace(R.id.content_frame, rentalFragment).commit();
 	        }	        

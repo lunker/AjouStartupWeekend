@@ -29,133 +29,29 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
-public class SplashActivity extends Activity{
-
+public class SplashActivity extends Activity {
 
 	private final String MAINPRODUCTNAME = "mp";
 	private final String MAINPRODUCTEXTEN = ".jpeg";
-	
-	private final int SPLASH_DISPLAY_LENGTH = 1000;
+
+	private final int SPLASH_DISPLAY_LENGTH = 2000;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_splash_activity);
-		
-		/*
-		MainThread[] th = new MainThread[7];
-		  for(int i = 0 ; i < 5 ; i++)
-		  {
-			  th[i] = new MainThread(i);
-			  th[i].start();
-		  }
-		  */
-		
-		
-		new Handler().postDelayed(new Runnable(){
-            @Override
-            public void run() {
-                /* Create an Intent that will start the Menu-Activity. */
-                Intent mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
-                SplashActivity.this.startActivity(mainIntent);
-                SplashActivity.this.finish();
-            }
-        }, SPLASH_DISPLAY_LENGTH);
-		
-		
-	}
-	
-	class MainThread extends Thread {
-		
-		int i = 0 ;
-		public static final int MAX_TOTAL_CONNECTION = 20;
-		public static final int MAX_CONNECTIONS_PER_ROUTE = 20;
-		public static final int TIMEOUT_CONNECT = 15000;
-		public static final int TIMEOUT_READ = 15000;
-		private HttpClient mHttpClient;
-		HttpGet get =null;
-		
-		public MainThread(int i ){
-			this.i = i ;
-		}
-		@Override
-		public void run() {
-			// TODO Auto-generated method stub
-			String SERVER = "http://192.168.43.137:8787";
-			/*
-			HttpGet get = new HttpGet(SERVER);
-			try {
-				
-				get.addHeader("id",i+"");
-				get.addHeader("state", "main");
-				HttpResponse response = client.execute(get);
-				Log.i("ajou", "get the response in main thread");
-				Log.i("ajou", response.getHeaders("hi")[0].toString());
-				
-				Bitmap bitmap = BitmapFactory.decodeStream(response.getEntity().getContent());
-//	    		Bitmap bitmap = GlobalVariable.decodeSampledBitmapFromFileInputStream(response.getEntity().getContent(), 80, 80);
-				
-				Log.i("ajou", getFilesDir().getAbsolutePath());
-	    		File file = new File(getFilesDir().getAbsolutePath()+"/"+ MAINPRODUCTNAME+i+MAINPRODUCTEXTEN);
-	    	
-	    		FileOutputStream out = new FileOutputStream(file);
-    			bitmap.compress(CompressFormat.JPEG, 100, out);
-    			out.close();
-    			Log.i("clientApp", "write image to cache");
-				
-			} catch (ClientProtocolException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				/* Create an Intent that will start the Menu-Activity. */
+				Intent mainIntent = new Intent(SplashActivity.this,
+						LoginActivity.class);
+				SplashActivity.this.startActivity(mainIntent);
+				SplashActivity.this.finish();
 			}
-			*/
-			
-			
-			
-			 SchemeRegistry schemeRegistry = new SchemeRegistry();
-			   schemeRegistry.register(new Scheme( "http", PlainSocketFactory.getSocketFactory(), 80));
+		}, SPLASH_DISPLAY_LENGTH);
 
-			   HttpParams params = new BasicHttpParams();
-			   ConnManagerParams.setMaxTotalConnections(params, MAX_TOTAL_CONNECTION );
-			   ConnManagerParams.setMaxConnectionsPerRoute( params, new ConnPerRouteBean(MAX_CONNECTIONS_PER_ROUTE) );  
-
-			   HttpConnectionParams.setConnectionTimeout(params, TIMEOUT_CONNECT);
-			   HttpConnectionParams.setSoTimeout(params, TIMEOUT_READ);
-			   HttpConnectionParams.setTcpNoDelay(params, true);
-
-			   ThreadSafeClientConnManager cm = new ThreadSafeClientConnManager(params, schemeRegistry);
-			   
-			   mHttpClient = new DefaultHttpClient(cm, null);
-			   get = new HttpGet("http://192.168.43.137:8787");
-			   	get.addHeader("id",i+"");
-				get.addHeader("state", "main");
-				HttpResponse response;
-				try {
-					response = mHttpClient.execute(get);
-					Log.i("ajou", "get the response in main thread");
-					Log.i("ajou", response.getHeaders("hi")[0].toString());
-					
-					Bitmap bitmap = BitmapFactory.decodeStream(response.getEntity().getContent());
-//		    		Bitmap bitmap = GlobalVariable.decodeSampledBitmapFromFileInputStream(response.getEntity().getContent(), 80, 80);
-					
-					Log.i("ajou", getFilesDir().getAbsolutePath());
-		    		File file = new File(getFilesDir().getAbsolutePath()+"/"+ MAINPRODUCTNAME+i+MAINPRODUCTEXTEN);
-		    	
-		    		FileOutputStream out = new FileOutputStream(file);
-		    		bitmap.compress(CompressFormat.JPEG, 100, out);
-	   			out.close();
-	   			
-				} catch (ClientProtocolException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-			
-		}//end run
 	}
 }

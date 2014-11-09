@@ -471,10 +471,7 @@ int drawable like 0x7f020060
 int drawable powered_by_google_dark 0x7f020061
 int drawable powered_by_google_light 0x7f020062
 int drawable soldout 0x7f020063
-int drawable test1 0x7f020064
-int drawable test2 0x7f020065
-int drawable test3 0x7f020066
-int drawable test4 0x7f020067
+int drawable splash 0x7f020064
 int id ScrlView 0x7f0c006e
 int id action_bar 0x7f0c0044
 int id action_bar_activity_content 0x7f0c0003
@@ -847,6 +844,7 @@ int style CardView_Dark 0x7f050007
 int style CardView_Light 0x7f050006
 int style CustomActionBarTheme 0x7f0500f5
 int style MyActionBar 0x7f0500f6
+int style MyActionBarTitleText 0x7f0500f7
 int style Platform_AppCompat 0x7f0500d1
 int style Platform_AppCompat_Dialog 0x7f0500d3
 int style Platform_AppCompat_Light 0x7f0500d2
