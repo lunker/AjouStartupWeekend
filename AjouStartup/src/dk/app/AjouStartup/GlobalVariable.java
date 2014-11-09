@@ -8,7 +8,7 @@ public class GlobalVariable extends Application {
 	private final int HTTPPORT = 8787;
 	
 	private final String SERVER = "http://" + SERVERIP + ":" + HTTPPORT ;
-//	private final String SERVER = "http://172.30.90.235;8787";
+//	private final String SERVER = "http://192.168.43.137:8787";
 	
 	private final String MAINPRODUCTNAME = "mtest";
 	private final String MAINPRODUCTEXTEN = ".PNG";

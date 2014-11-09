@@ -2,6 +2,8 @@ package dk.app.AjouStartup.communication;
 
 import java.util.ArrayList;
 
+import com.google.android.gms.internal.mp;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -72,8 +74,6 @@ public class CmcAdapter extends RecyclerView.Adapter<CmcAdapter.ViewHolder> {
             hateImage.setImageResource(R.drawable.hate);
             hateCount = (TextView) v.findViewById(R.id.cmc_sns_hate_count);
             
-            
-            
             final Context mContext = context;
             
             mCardView.setOnClickListener(new View.OnClickListener() {
@@ -82,10 +82,16 @@ public class CmcAdapter extends RecyclerView.Adapter<CmcAdapter.ViewHolder> {
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
 					Log.i("ajou", "on click in card view" + mPosition);
-
-					Intent intent = new Intent(mContext, ProductInfo.class);
+					
+					
+					
+					Intent intent = new Intent(mContext, PSInfo.class);
 					intent.putExtra("position", mPosition);
 					mContext.startActivity(intent);
+					
+					
+//					finish();
+					
 				}
 			});
         }
@@ -124,5 +130,7 @@ public class CmcAdapter extends RecyclerView.Adapter<CmcAdapter.ViewHolder> {
     public int getItemCount() {
         return dataset.size();
     }
+    
+   
 	
 }

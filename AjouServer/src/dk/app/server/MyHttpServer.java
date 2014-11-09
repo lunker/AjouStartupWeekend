@@ -104,8 +104,49 @@ public class MyHttpServer extends Verticle {
 						});
 						
 					}
+					else if( req.headers().get("state").equals("ps")){
+						
+						
+						int id2 = Integer.parseInt(req.headers().get("productid"));
+
+						JsonObject find = new JsonObject();
+						find.putString("action", "find");
+						find.putString("collection", "product");
+						find.putObject("matcher", new JsonObject().putNumber("productId",  id2 ));
+						
+						
+						eventBus.send("database.my", find, new Handler<Message<JsonObject>>() {
+
+							@Override
+							public void handle(Message<JsonObject> result) {
+								// TODO Auto-generated method stub
+								
+								String pss = "";
+								System.out.println("get the ps in server : " + result.body().getArray("results").toString());
+								for(int i = 0 ; i < result.body().getArray("results").size() ; i ++){
+									
+
+									JsonObject tmp =  result.body().getArray("results").get(i);
+									pss += tmp.getString("ps");
+									pss+="%";
+										
+									//									req.response().wr
+								}
+								
+								req.response().putHeader("Content-Length",pss.getBytes()+"");
+								req.response().write(pss, "UTF-16");
+								req.response().setChunked(true);
+								req.response().end();
+								
+								
+							}
+					});
+						
+					}
+						
 					
 				}// end get
+				
 				
 				//take the user photo upload
 				request.uploadHandler( new Handler<HttpServerFileUpload>() {

@@ -11,6 +11,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -22,9 +23,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import dk.app.AjouStartup.R;
+import dk.app.AjouStartup.communication.PSInfo;
 
 public class ProductInfo extends Activity {
 	
@@ -42,6 +45,7 @@ public class ProductInfo extends Activity {
 	private TextView rentalPS;
 	
 	
+	private Button btn_rental;
 	private String from = ""; 
 	private String to = "";
 	private String price = "";
@@ -83,6 +87,18 @@ public class ProductInfo extends Activity {
 		ivColor = (View) findViewById(R.id.myRectangleView);
 		ivColor.setBackgroundColor(Color.parseColor("#303030"));
 		
+		
+		btn_rental = (Button) findViewById(R.id.product_info_btn_rental);
+		btn_rental.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+
+			
+			}
+		});
 		MyThread th = new MyThread(mHandler);
 		th.start();
 		
