@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -141,6 +142,7 @@ public class MainActivity extends ActionBarActivity {
 		
 		mTitle = mDrawerTitle = getTitle();
 		
+		getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE);
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
 				R.drawable.ic_launcher,R.string.greeting) {
 
@@ -160,7 +162,6 @@ public class MainActivity extends ActionBarActivity {
 				
 				setTitle(R.string.title);
 				invalidateOptionsMenu(); // creates call to
-											// onPrepareOptionsMenu()
 			}
 		};
 

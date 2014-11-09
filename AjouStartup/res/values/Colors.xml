@@ -2,5 +2,5 @@
 <resources>
     
     <item type="color" name="test">#303030</item>
-    
+    <item type="color" name="white">#ffffff</item>
 </resources>

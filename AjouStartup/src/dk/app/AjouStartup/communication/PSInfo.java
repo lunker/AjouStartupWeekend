@@ -21,10 +21,7 @@ public class PSInfo extends Activity {
 	Handler mHandler = new Handler(){
 	     public void handleMessage(Message msg) {
 	      if(msg.what==0){
-	    	  rentalFrom.setText(from);
-	    	  rentalTo.setText(to);
-	    	  rentalPS.setText(ps);
-	    	  rentalPrice.setText(price);
+	    	
 	      }
 	};
 	};
@@ -41,7 +38,7 @@ public class PSInfo extends Activity {
 		layoutParams.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
 		layoutParams.dimAmount = 0.7f;
 		getWindow().setAttributes(layoutParams);
-		setContentView(R.layout.layout_product_info);
+		setContentView(R.layout.layout_ps_info);
 		
 		mTypeface = Typeface.createFromAsset(getAssets(), "robotobold.ttf.mp3");
 	    ViewGroup root = (ViewGroup) findViewById(android.R.id.content);

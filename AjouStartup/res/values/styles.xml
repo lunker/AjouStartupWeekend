@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
@@ -31,9 +31,11 @@
     <!-- ActionBar styles -->
     <style name="MyActionBar" parent="@style/Theme.AppCompat.Light">
         <item name="android:background">@color/test</item>
+        <item name="android:textColor">@color/white</item>
 
         <!-- Support library compatibility -->
         <item name="background">@color/test</item>
+        
     </style>
 
 </resources>

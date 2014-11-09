@@ -1,10 +1,17 @@
 package dk.app.AjouStartup.rental;
 
+import java.io.FileNotFoundException;
+import java.net.URI;
 import java.util.ArrayList;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,6 +30,8 @@ public class RentalAdapter extends RecyclerView.Adapter<RentalAdapter.ViewHolder
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
 	
+	
+	Context t = null;
 	ArrayList<String> dataset = new ArrayList<String>();
 	public RentalAdapter(ArrayList<String> dataset){
 		this.dataset = dataset;
@@ -36,15 +45,15 @@ public class RentalAdapter extends RecyclerView.Adapter<RentalAdapter.ViewHolder
         public ImageView mImageView;
         public int size ; 
         public int mPosition;
+        public Context pContext;
         
         public ViewHolder(View v, Context context) {
             super(v);
             mCardView = (CardView) v;
             mImageView = (ImageView) v.findViewById(R.id.rental_grid_item_image);
-            
+            pContext = context;
             
             final Context mContext = context;
-            
             mCardView.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
@@ -83,7 +92,13 @@ public class RentalAdapter extends RecyclerView.Adapter<RentalAdapter.ViewHolder
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         
-        holder.mImageView.setImageBitmap(BitmapFactory.decodeFile("/storage/emulated/0/DCIM/test/"+"mp"+ position+".jpeg"));
+        
+        if(position == 5){
+        	holder.mImageView.setImageBitmap(makeOverlay(holder.pContext, "/storage/emulated/0/DCIM/test/"+"mp"+ position+".jpeg", R.drawable.soldout));
+        }
+        else{
+        	holder.mImageView.setImageBitmap(BitmapFactory.decodeFile("/storage/emulated/0/DCIM/test/"+"mp"+ position+".jpeg"));
+        }
         holder.mPosition = position;
         Log.i("ajou", "onbindview pos: " + position);
     }
@@ -94,4 +109,47 @@ public class RentalAdapter extends RecyclerView.Adapter<RentalAdapter.ViewHolder
         return dataset.size();
     }
 	
+    
+    public Bitmap makeOverlay(Context context, String underImageSource, int resId){
+    	
+    	Bitmap bm1 = null;
+    	Bitmap bm2 =  null;
+    	Bitmap newBitmap = null;
+    	  
+    	  bm1 = BitmapFactory.decodeFile(underImageSource);
+		   bm2 = BitmapFactory.decodeResource(context.getResources(), resId);
+		   
+  	  int w;
+  	   if(bm1.getWidth() >= bm2.getWidth()){
+		w = bm1.getWidth();
+  	   }else{
+		w = bm2.getWidth();
+  	   }
+  	   
+  	   int h;
+  	   if(bm1.getHeight() >= bm2.getHeight()){
+		h = bm1.getHeight();
+  	   }else{
+		h = bm2.getHeight();
+  	   }
+  	   
+  	   
+  	   
+  	  
+  	   Config config = bm1.getConfig();
+  	   if(config == null){
+		config = Bitmap.Config.ARGB_8888;
+  	   }
+  	   
+  	   newBitmap = Bitmap.createBitmap(w, h, config);
+  	   Canvas newCanvas = new Canvas(newBitmap);
+  	   
+  	   newCanvas.drawBitmap(bm1, 0, 0, null);
+  	   
+  	   Paint paint = new Paint();
+  	   paint.setAlpha(128);
+  	   newCanvas.drawBitmap(bm2, 0, 0, paint);
+    	  
+    	  return newBitmap;
+    }
 }
