@@ -32,7 +32,7 @@ public class ProductInfo extends Activity {
 //	Typeface typeface = Typeface.createFromAsset(getAssets(), "font/Roboto-Medium.ttf");
 	private TextView tv = null;
 	private ImageView iv = null;
-	private ImageView ivColor = null;
+	private View ivColor = null;
 	private int position = -1;
 	private Typeface mTypeface;
 	
@@ -46,7 +46,8 @@ public class ProductInfo extends Activity {
 	private String to = "";
 	private String price = "";
 	private String ps = "";
-	
+//	
+
 	Handler mHandler = new Handler(){
 	     public void handleMessage(Message msg) {
 	      if(msg.what==0){
@@ -79,9 +80,8 @@ public class ProductInfo extends Activity {
 		iv = (ImageView) findViewById(R.id.product_image);
 		iv.setImageBitmap(BitmapFactory.decodeFile("/storage/emulated/0/DCIM/test/"+"mp"+ position+".jpeg"));
 		
-		ivColor = (ImageView) findViewById(R.id.product_info_color);
+		ivColor = (View) findViewById(R.id.myRectangleView);
 		ivColor.setBackgroundColor(Color.parseColor("#303030"));
-
 		
 		MyThread th = new MyThread(mHandler);
 		th.start();

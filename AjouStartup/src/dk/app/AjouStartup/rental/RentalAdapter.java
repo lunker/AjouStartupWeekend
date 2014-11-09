@@ -30,11 +30,13 @@ public class RentalAdapter extends RecyclerView.Adapter<RentalAdapter.ViewHolder
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
 	
+	int range = -1;
 	
 	Context t = null;
 	ArrayList<String> dataset = new ArrayList<String>();
-	public RentalAdapter(ArrayList<String> dataset){
+	public RentalAdapter(ArrayList<String> dataset, int range){
 		this.dataset = dataset;
+		this.range = range;
 		
 	}
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -91,13 +93,13 @@ public class RentalAdapter extends RecyclerView.Adapter<RentalAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        
-        
-        if(position == 5){
-        	holder.mImageView.setImageBitmap(makeOverlay(holder.pContext, "/storage/emulated/0/DCIM/test/"+"mp"+ position+".jpeg", R.drawable.soldout));
+    	
+        if(position == (5 + range*2)){
+//        	holder.mImageView.setImageBitmap(makeOverlay(holder.pContext, "/storage/emulated/0/DCIM/test/"+"mp"+ position+".jpeg", R.drawable.soldout));
+        	holder.mImageView.setImageResource(R.drawable.soldout);
         }
         else{
-        	holder.mImageView.setImageBitmap(BitmapFactory.decodeFile("/storage/emulated/0/DCIM/test/"+"mp"+ position+".jpeg"));
+        	holder.mImageView.setImageBitmap(BitmapFactory.decodeFile("/storage/emulated/0/DCIM/test/"+"mp"+ (position + range*3)+".jpeg"));
         }
         holder.mPosition = position;
         Log.i("ajou", "onbindview pos: " + position);

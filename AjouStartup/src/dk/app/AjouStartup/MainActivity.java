@@ -56,7 +56,8 @@ public class MainActivity extends ActionBarActivity {
 	
 	private int beforeSelected = -1;
 	String[] categorys = {"profile", "rental", "communication"};
-	String[] subCategorys = {"christmas", "wedding"};
+	String[] subCategorys = {"Wedding", "Interview", "Picnic"};
+	
 	private List<String> mainCategory = null;
 	private HashMap<String, List<String>> subCategory = new HashMap<String, List<String>>();
 	private List<String> rentalCategroy = new ArrayList<String>();
@@ -307,14 +308,20 @@ public class MainActivity extends ActionBarActivity {
 	        
 	        if(position == 0){
 	        	setTitle("Rental");
-	        	rentalFragment = new RentalFragment();
+	        	
+	        	rentalFragment = new RentalFragment(0);
 	        	getFragmentManager().beginTransaction().replace(R.id.content_frame, rentalFragment).commit();
 	        }
-	        else{
+	        else if(position == 1 ){
 	        	setTitle("Rental");
-	        	rentalFragment = new RentalFragment();
+	        	rentalFragment = new RentalFragment(1);
 	        	getFragmentManager().beginTransaction().replace(R.id.content_frame, rentalFragment).commit();
 	        }	        
+	        else{
+	        	setTitle("Rental");
+	        	rentalFragment = new RentalFragment(2);
+	        	getFragmentManager().beginTransaction().replace(R.id.content_frame, rentalFragment).commit();
+	        }
 	        
 	        setTitle("hi");
 

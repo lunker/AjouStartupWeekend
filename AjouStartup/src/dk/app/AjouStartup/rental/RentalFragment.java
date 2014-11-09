@@ -24,6 +24,16 @@ public class RentalFragment extends Fragment {
 	private ArrayList<String> dataSet = new ArrayList<String>();
 	RentalAdapter adapter ;
 	
+	private int range = 0 ;
+	public RentalFragment() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public RentalFragment(int category){
+		this.range = category;
+		
+	}
+	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,7 +52,6 @@ public class RentalFragment extends Fragment {
 				        super.onScrolled(recyclerView, dx, dy);
 
 				        visibleItemCount = recycleView.getChildCount();
-//				        adapter.g
 				        lastOne = mLayoutManager.findLastVisibleItemPosition();
 				        
 			                if ( (visibleItemCount - lastOne) <= visibleThreshold) {
@@ -55,6 +64,7 @@ public class RentalFragment extends Fragment {
 			                }
 				    }
 			});
+			
 			mLayoutManager = new GridLayoutManager(getActivity(), 2);
 			recycleView.setLayoutManager(mLayoutManager);
 			
@@ -70,9 +80,8 @@ public class RentalFragment extends Fragment {
 			dataSet.add("1");
 			dataSet.add("1");
 			
-			adapter = new RentalAdapter(dataSet);
+			adapter = new RentalAdapter(dataSet, range);
 			recycleView.setAdapter(adapter);
-			
 		}
 		/*
 		else{
