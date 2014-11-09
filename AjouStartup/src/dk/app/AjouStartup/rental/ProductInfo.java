@@ -1,12 +1,14 @@
 package dk.app.AjouStartup.rental;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 
 import android.app.Activity;
 import android.graphics.BitmapFactory;
@@ -128,12 +130,13 @@ public class ProductInfo extends Activity {
 				
 				from = (response.getHeaders("rentalFrom"))[0].getValue();
 				to = (response.getHeaders("rentalTo"))[0].getValue();
-				ps = (response.getHeaders("ps"))[0].getValue();
-				price =( response.getHeaders("rentalPrice")[0]).getValue();
+//				ps = new String( response.getHeaders("ps")[0].getValue().getBytes(), "UTF-16");
+				ps = EntityUtils.toString(response.getEntity() ,"UTF-16");
 				
+				price =( response.getHeaders("rentalPrice")[0]).getValue();
 				handler.sendEmptyMessage(0);
 				
-				Log.i("ajou", "test the thread : " + from);
+				Log.i("ajou", "test the thread : " + ps);
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

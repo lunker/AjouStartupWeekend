@@ -25,6 +25,7 @@ import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import dk.app.AjouStartup.communication.CommunicationFragment;
 import dk.app.AjouStartup.profile.ProfileFragment;
 import dk.app.AjouStartup.rental.RentalFragment;
 
@@ -336,7 +337,9 @@ public class MainActivity extends ActionBarActivity {
 	        	;
 	        }
 	        else{
-//	        	getFragmentManager().beginTransaction().replace(R.id.content_frame, ).commit();;
+	        	Fragment cmcFragment = new CommunicationFragment();
+	        	getFragmentManager().beginTransaction().replace(R.id.content_frame, cmcFragment).commit();
+	        	mDrawerLayout.closeDrawer(navDrawerView);
 	        }
 	    }
 	

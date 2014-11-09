@@ -19,7 +19,6 @@ public class RentalFragment extends Fragment {
 	private GridLayoutManager mLayoutManager;
 
 	private View view = null;
-	private String[] strDataSet = { "1", "2", "3", "4", "5", "6", "7" };
 	private int visibleThreshold = 2;
 	int firstVisibleItem, visibleItemCount, totalItemCount, lastOne;
 	private ArrayList<String> dataSet = new ArrayList<String>();

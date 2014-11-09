@@ -70,7 +70,6 @@ public class MyHttpServer extends Verticle {
 								System.out.println("image send successful.");
 							}
 						});
-//						req.response().write("id");
 					}//end if
 					else if(req.headers().get("state").equals("getdetail")){
 						
@@ -79,7 +78,7 @@ public class MyHttpServer extends Verticle {
 						JsonObject find = new JsonObject();
 						find.putString("action", "find");
 						find.putString("collection", "product");
-						find.putObject("matcher", new JsonObject().putNumber("productid",  id ));
+						find.putObject("matcher", new JsonObject().putNumber("productId",  id ));
 						eventBus.send("database.my", find, new Handler<Message<JsonObject>>() {
 							
 							@Override
@@ -92,14 +91,13 @@ public class MyHttpServer extends Verticle {
 //								tmp.getString("nickname");
 //								System.out.println("result at 1 : " + result.body().getArray("results").get(2));
 //								req.response().sendFile(url);
-								
 								req.response().headers().add("rentalFrom", tmp.getString("rentalFrom"));
-								req.response().headers().add("rentalTo", tmp.getString("rentalTO"));
-								req.response().headers().add("rentalPrice", tmp.getNumber("rentalprice")+"");
-								req.response().headers().add("ps", tmp.getString("ps"));
+								req.response().headers().add("rentalTo", tmp.getString("rentalTo"));
+								req.response().headers().add("rentalPrice", tmp.getNumber("rentalPrice")+"");
+//								req.response().headers().add("ps", tmp.getString("ps"));
 								req.response().setChunked(true);
 //								req.response().headers().add("Content-Length", "1");
-								req.response().write("asd");
+								req.response().write(tmp.getString("ps"), "UTF-16");
 								req.response().end();
 								
 							}
